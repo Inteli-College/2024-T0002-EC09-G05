@@ -1,0 +1,1 @@
+# This file must contain all tests results
