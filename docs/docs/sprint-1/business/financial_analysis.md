@@ -16,7 +16,7 @@ Configuração do calculo:
 * Plano de Saúde: R$ 200
 
 
-| Pessoas | Área do Conhecimento | Salário Mensal | Custo | CLT | Meses | Custo Total Anual |
+| Pessoas | Área do Conhecimento | Salário Mensal | Custo CLT | Meses | Custo Total Anual | Custo Total |
 |---|---|---|---|---|---|---|
 | 3 | Desenvolvedor Full-Stack | $5.500,00 | $9.172,22 | 12 | $330.199,92 |
 | 1 | Analista de Dados | $5.500,00 | $9.172,22 | 12 | $110.066,64 |
@@ -24,7 +24,7 @@ Configuração do calculo:
 | 1 | Devops | $6.000,00 | $9.883,33 | 12 | $118.599,96 |
 | 1 | CyberSegurança | $7.000,00 | $11.305,56 | 12 | $135.666,72 |
 | 1 | Engenheiro de Dados | $10.000,00 | $15.572,22 | 12 | $186.866,64 |
-| **Total** | **6** | **-** | **-** | **-** | **-** | **$982.933,20** |
+| **Total** | **6** | **-** | **-** | **-** | **-** |**$982.933,20** |
 
 <br></br>
 <br></br>
