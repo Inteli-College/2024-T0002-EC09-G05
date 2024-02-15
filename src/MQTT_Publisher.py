@@ -40,8 +40,7 @@ class Sensor():
             self.delta = 0
             rand = (random.uniform(self._min, self._max))
             self.rand_number = rand*abs((rand/self._max)+(rand/self._min))
-        
-            
+              
         variance = round(abs(np.random.normal(0,5))*math.cos(self.delta),1)
         value = (init+variance)
         if value > self._max:
@@ -52,18 +51,4 @@ class Sensor():
         return f'{value:,.2f}'
         
         
-        
-
-pub_broker = {
-    "link":"broker.hivemq.com",
-    "port":1883
-}
-
-temperature_sensor = Sensor(
-    name="temperatura",
-    min = -40,
-    max=70,
-    broker=pub_broker
-)
-
-temperature_sensor.on()
+    
