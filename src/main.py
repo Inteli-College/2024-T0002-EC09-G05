@@ -8,12 +8,11 @@ pub_broker = {
 temperature_sensor = Sensor(
     name="temperatura",
     min = -40,
-    max=70,
-    broker=pub_broker
+    max=70
 )
 
 
 
 if __name__ == "__main__":
-    temperature_sensor.on()
+    temperature_sensor.on(pub_broker)
 
