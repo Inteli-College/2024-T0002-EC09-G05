@@ -20,3 +20,8 @@ ENV/
 # Ignore generated docs
 *.dox
 *.wikidoc
+
+src/influxdb/
+src/connect-plugins/
+
+src/server/tmp
