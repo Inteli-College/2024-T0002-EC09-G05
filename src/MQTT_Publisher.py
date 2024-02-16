@@ -16,16 +16,16 @@ class Sensor():
     
     def on(self, broker):
         # Configuração do cliente
-        client = mqtt.Client("python_publisher")
+        client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, "python_publisher")
 
         # Conecte ao broker
         client.connect(broker['link'], broker['port'], 30)
 
         # Loop para publicar mensagens continuamente
         try:
-            self.rand_number = random.uniform(self._min, self._max)
+            rand_number = random.uniform(self._min, self._max)
             while True:
-                message = self.get_data(init=self.rand_number)
+                message = self.get_data(init=rand_number)
                 client.publish("test/topic", str(message))
                 print(f"{self.nameType}: {str(message)} | {time.strftime("%H:%M:%S")}")
                 time.sleep(2)
@@ -39,7 +39,7 @@ class Sensor():
         if self.delta > 2:
             self.delta = 0
             rand = (random.uniform(self._min, self._max))
-            self.rand_number = rand*abs((rand/self._max)+(rand/self._min))
+            init = rand*abs((rand/self._max)+(rand/self._min))
               
         variance = round(abs(np.random.normal(0,5))*math.cos(self.delta),1)
         value = (init+variance)
