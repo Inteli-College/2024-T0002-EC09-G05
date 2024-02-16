@@ -16,7 +16,7 @@ class Sensor():
     
     def on(self):
         # Configuração do cliente
-        client = mqtt.Client("python_publisher")
+        client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, "python_publisher")
 
         # Conecte ao broker
         client.connect(self.broker['link'], self.broker['port'], 30)
