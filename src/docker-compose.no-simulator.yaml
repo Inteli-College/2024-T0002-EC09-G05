@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+
+
+  rabbitmq:
+    container_name: rabbitmq
+    build: ./rabbitMQ
+    ports:
+      - "15672:15672"
+      - "1883:1883"
+    command: ["rabbitmq-server"]
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 2s
+      timeout: 2s
+      retries: 20
+    restart: always
+
+
+  server:
+    container_name: server
+    build: ./server
+    volumes:
+      - ./server:/app
+    ports:
+    - 8080:8080
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
