@@ -53,7 +53,7 @@ func main() {
 		panic(token.Error())
 	}
 
-	for i := 0; i < 200; i++ {
+	for {
 
 		topic := "sensor/data"
 		data, _ := json.Marshal(simulateSensorData())
@@ -65,5 +65,4 @@ func main() {
 		fmt.Println("Sent simulated sensor reading to topic", topic)
 		time.Sleep(3 * time.Second)
 	}
-	client.Disconnect(250)
 }
