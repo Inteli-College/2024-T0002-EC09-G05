@@ -20,3 +20,13 @@ ENV/
 # Ignore generated docs
 *.dox
 *.wikidoc
+
+src/influxdb/
+src/connect-plugins/
+
+src/tmp
+src/server/tmp
+src/simulator/tmp
+
+src/server/erl_crash.dump
+src/simulator/erl_crash.dump
