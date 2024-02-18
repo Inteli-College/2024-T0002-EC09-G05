@@ -1,4 +1,4 @@
-from MQTT_Publisher import Sensor
+from mqtt.MQTT_Publisher import Sensor
 
 pub_broker = {
     "link":"broker.hivemq.com",
