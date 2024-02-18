@@ -32,7 +32,7 @@ O SAM (Serviceable Available Market) é o segmento do mercado que você pode alc
 
 Tendo em vista o escopo de atuação do projeto atual, uma solução de monitoramento das condições do meio ambiente, degradação e vitalidade, além de seus impactos na qualidade de vida dos cidadãos, pode-se dizer que o SAM é a cidade de São Paulo e municípios periféricos. 
 
-Uma vez que os principais municípios paulistas representam quase 20 milhões de habitantes[^5], e que enfrentam diversos desafios, principalmente relacionados ao meio ambiente, como a poluição do ar, a poluição sonora, a poluição da água, a geração de resíduos, entre outros, é possível dizer que o SAM da empresa é um mercado potencial, apresentando uma demanda real para soluções deste tipo.
+Uma vez que os principais municípios paulistas representam quase 20 milhões de habitantes, e que enfrentam diversos desafios, principalmente relacionados ao meio ambiente, como a poluição do ar, a poluição sonora, a poluição da água, a geração de resíduos, entre outros, é possível dizer que o SAM da empresa é um mercado potencial, apresentando uma demanda real para soluções deste tipo.
 
 Como métrica para calcular o SAM, pode-se considerar o número de cidades que indicadas como inteligentes, no estado de São Paulo e o valor médio de investimento inicial igual a 1,5 milhões de reais por cidade.
 
