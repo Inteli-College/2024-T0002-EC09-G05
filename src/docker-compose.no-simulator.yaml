@@ -18,18 +18,6 @@ services:
     restart: always
 
 
-  server:
-    container_name: server
-    build: ./server
-    volumes:
-      - ./server:/app
-    ports:
-    - 8080:8080
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-
-
   influxdb:
     image: influxdb:latest
     container_name: influxdb
@@ -42,3 +30,22 @@ services:
       DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: admin
     ports:
     - "8086:8086"
+    healthcheck:
+      test: "curl -f http://localhost:8086/ping"
+      interval: 2s
+      timeout: 2s
+      retries: 20
+
+
+  server:
+    container_name: server
+    build: ./server
+    volumes:
+      - ./server:/app
+    ports:
+    - 8080:8080
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      influxdb:
+        condition: service_healthy
