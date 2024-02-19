@@ -3,7 +3,7 @@ title: Modelo - V1
 sidebar_position: 1
 ---
 
-![Arquitetura](architecture_v1.png)
+![img alt](/img/architecture_v1.png)
 
 Nesse primeiro modelo de arquitetura, temos:
 

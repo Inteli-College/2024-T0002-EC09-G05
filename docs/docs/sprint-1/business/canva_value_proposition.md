@@ -7,7 +7,7 @@ sidebar_position: 5
 
 O Canvas da Proposta de Valor é uma ferramenta estratégica que te ajuda a mapear e comunicar o valor que você oferece aos seus clientes. Através de uma análise profunda dos seus clientes e da sua oferta, o Canvas te permite identificar os problemas que você resolve, os benefícios que você oferece e como você se diferencia da concorrência. Com o Canvas, você pode criar uma proposta de valor clara, concisa e focada nas necessidades dos seus clientes, aumentando as chances de sucesso do seu projeto.
 
-![Canva_Value_Proposition](Canvas.png)
+![img alt](/img/canvas.png)
 
 1. **Segmento de Cliente:**
     - Gestores de secretarias públicas em níveis municipal, em um primeiro momento, com possibilidade de expansão ou integração do sistema para outras regiões

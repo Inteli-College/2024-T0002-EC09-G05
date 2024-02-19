@@ -11,7 +11,7 @@ Devido ao público muito amplo em que a nossa solução será disponibilizada, f
 
 * **Para maior riqueza de detalhes, acesso o link no fim dessa página**
 
-![Persona_1](Persona_1.jpg)
+![img alt](/img/persona_1.jpg)
 
 * Eu como funcionária pública, quero poder acessar o dashboard pelo celular, para que eu possa consulta-lá em qualquer lugar com cobertura de internet.
 * Eu como funcionária pública, quero poder acessar o dashboard  para me manter informada, principalmente recomendações de saúde, em que posso compartilhar com a minha família.
@@ -19,7 +19,7 @@ Devido ao público muito amplo em que a nossa solução será disponibilizada, f
 <br></br>
 <br></br>
 
-![Persona_2](Persona_2.jpg)
+![img alt](/img/persona_2.jpg)
 
 * Eu como Engenheira Ambiental , quero poder acessar o dashboard pelo computador, para que eu possa planejar ações na cidade de São Paulo em conjunto com a Secretaria.
 * Eu como Engenheira Ambiental, quero poder acessar o dashboard com o meu login, para ter acesso aos dados filtrados para o meu uso em específico.
@@ -28,7 +28,7 @@ Devido ao público muito amplo em que a nossa solução será disponibilizada, f
 <br></br>
 <br></br>
 
-![Persona_3](Persona_3.jpg)
+![img alt](/img/persona_3.jpg)
 
 * Eu como funcionário da saúde, quero consultar o dashboard, para poder ver se existem evidências do aumento de doenças em relação ao aumento da temperatura (Exemplo)
 * Eu como funcionário da saúde, quero consultar o dashboard, para poder ver tendências de dados e organizar tratamentos com maior frequência.
@@ -37,7 +37,7 @@ Devido ao público muito amplo em que a nossa solução será disponibilizada, f
 <br></br>
 <br></br>
 
-![Peronsa_4](Persona_4.jpg)
+![img alt](/img/persona_4.jpg)
 
 * Eu como ativista da sociedade civil, quero participar de grupos de discussão online sobre questões ambientais, para compartilhar ideias e estratégias com outros membros da comunidade interessados em promover a sustentabilidade.
 * Eu como ativista da sociedade civil, quero acessar informações sobre eventos ambientais locais, para poder participar de ações de plantio de árvores, limpeza de parques e outras iniciativas de conservação.
