@@ -29,7 +29,7 @@ class Sensor():
             while count <= sec:
                 message = self.get_data(init=rand_number)
                 client.publish("test/topic", str(message))
-                print(f"{self.nameType}: {str(message)} ")
+                #print(f"{self.nameType}: {str(message)} ")
                 count += 1
                 time.sleep(2)
         except KeyboardInterrupt:
