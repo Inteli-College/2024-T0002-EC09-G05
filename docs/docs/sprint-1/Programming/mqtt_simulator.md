@@ -17,7 +17,7 @@ Para o uso dessa funcionalidade siga as etapas abaixo:
 
 Entre no diretório '2024-T0002-EC09-G05\src\mqtt':
 ```
-cd 2024-T0002-EC09-G05\src\mqtt
+cd src\mqtt
 ```
 
 É recomendavel o uso de virtual environment. Para isso, rode:
@@ -40,16 +40,13 @@ Agora, instale as dependências do projeto:
 pip install -r requirements.txt 
 ```
 
- 
-**Objetivo**: Verificar a publicação de mensagens no Broker publico HiveMQ a partir de um sensor simulado
-
-**Estrutura do teste**: 
-Primeiro, no arquivo 'test_pub.py' dentro da pasta 'tests', configuramos um cliente MQTT (Paho MQTT, usado no nosso caso), instanciado a partir da classe de um Sensor 'Genérico'. A partir dele publicamos os dados em um Broker, para isso usamos o Broker publico da HiveMQ
-
-Para rodar, dentro da pasta 'tests' execute o seguinte código:
+Com as dependências instaladas basta rodar o projeto com o comando abaixo:
 ```
-pytest test_pub.py
+python main.py
 ```
+
+ ## Funcionamento do módulo 
+Caso todas as etapas acima estejam satisfeitas, o resultado esperado encontra-se neste vídeo de demonstração: [Click Para Ver](https://drive.google.com/drive/folders/1mXoaW-fK-zhebGrNRBtqksd4BWKMuF36?usp=sharing)
 
 **Resultado esperado**
 ![img alt](/img/code_main-sensor-test_sprint_01.png)

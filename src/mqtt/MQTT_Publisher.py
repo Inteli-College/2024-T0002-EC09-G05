@@ -12,7 +12,6 @@ class Sensor():
         self._min = min
         self._max = max
 
-
     
     def on(self, broker, sec):
         # Configuração do cliente
@@ -44,7 +43,8 @@ class Sensor():
             self.delta = 0
             rand = (random.uniform(self._min, self._max))
             init = rand*abs((rand/self._max)+(rand/self._min))
-              
+        
+        
         variance = round(abs(np.random.normal(0,5))*math.cos(self.delta),1)
         value = (init+variance)
         if value > self._max:
