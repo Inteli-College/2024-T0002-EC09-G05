@@ -5,7 +5,7 @@ sidebar_position: 2
 # Matriz de Riscos
 Para a identificação dos riscos do projeto, foi utilizada a matriz de riscos, neste aparato são elencados os principais ofensores na execução do projeto, bem como suas respectivas probabilidades e impactos. A partir do pontos elencados abaixo, foram traçadas estratégias de mitigação na ocorrência de tais fatores que podem ser vistos após a matriz.
 
-![img alt](/img/risk_matrix_v1.jpg)
+![risk matrix](/img/risk_matrix_v1.png)
 
 # Estratégias de Mitigação
 ## Riscos 
@@ -27,3 +27,19 @@ Em se tratando da volumetria de informações que acarreta o projeto de monitora
 Durante a concepção do produto, pode-se desenvolver testes de carga para os microsserviços de modo que seja possível identificar gargalos e pontos de falha, bem como a implementação de um sistema de monitoramento de logs, que possa identificar possíveis falhas e alertar a equipe responsável pela implementação da solução. 
 
 Além disto, utilizando sistemas robustos como o Kafka, é possível garantir a integridade dos dados, uma vez que o mesmo é um sistema distribuído e tolerante a falhas, mesmo em casos de falhas de hardware.
+
+### Alto custo de operação e manutenção
+Os custos de operação são difíceis de estimar devido as gigantes proporções do projeto e desconhecimento do time a cerca das soluções que podem ser usadas, principalmente para a comunicação dos sensores com o servidor.
+
+Devemos estudar a fundo as alternativas para essa comunicação e entender do cliente qual seria o orçamento para um projeto de tamanha escala como o nosso.
+
+### Alto custo de implementação
+Assim como na anterior, devemos conversar com o stakeholder sobre um valor estimado e discutir possíveis cortes de custos, caso necessário.
+
+### Dificuldade na implementação
+Sendo um projeto de tecnologia, a implementação requer mão de obra qualificada. Devemos discutir com o stakeholder as melhores medidas para que a instalação do sistema ocorra da melhor maneira possível.
+
+
+### Vulnerabilidade a vazamento de dados
+Devido à nossa inexpêriencia em projetos de tanta exposição, sempre há o risco de ataques ao sistema. Devemos realizar a maior variedade de testes possíveis e corrigir todas as falhas comuns e conhecidas antes da entrega do projeto.
+
