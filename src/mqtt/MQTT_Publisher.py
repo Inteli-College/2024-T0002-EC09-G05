@@ -12,29 +12,41 @@ class Sensor():
         self._min = min
         self._max = max
 
-    
-    def on(self, broker, sec):
         # Configuração do cliente
-        client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, "python_publisher")
+        self.client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, "python_publisher")
 
+        self.connection = False
+        self.counter = 10
+
+    def on(self, broker, test={"tested":False,"sec":0}):
+        
         # Conecte ao broker
-        client.connect(broker['link'], broker['port'], 30)
-
-        # COntagem de segundos para sair do loop do pytest
-        count = 0
+        self.client.connect(broker['link'], broker['port'], 30)
+        self.connection = True
+        self.counter = test["sec"]
         # Loop para publicar mensagens continuamente
         try:
             rand_number = random.uniform(self._min, self._max)
-            while count <= sec:
+            while self.connected(test):
                 message = self.get_data(init=rand_number)
-                client.publish("test/topic", str(message))
-                #print(f"{self.nameType}: {str(message)} ")
-                count += 1
+                self.client.publish("test/topic", str(message))
                 time.sleep(1)
         except KeyboardInterrupt:
             print("Publicação encerrada")
-        client.disconnect()
+        self.client.disconnect()
 
+    def off(self) -> None:
+        self.connection = False
+        self.client.disconnect()
+        print("Publicação encerrada")
+    
+    def connected(self, test) -> bool:
+        if test["tested"] == True:
+            self.counter -= 1
+            if self.counter < 0:
+                self.off()
+
+        return self.connection
     
     def get_data(self, init): 
         

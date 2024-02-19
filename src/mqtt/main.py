@@ -14,5 +14,6 @@ temperature_sensor = Sensor(
 
 
 if __name__ == "__main__":
-    temperature_sensor.on(pub_broker, 18)
+    temperature_sensor.on(pub_broker)
+    
 
