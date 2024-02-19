@@ -1,4 +1,3 @@
-from src import main
 from src.MQTT_Publisher import Sensor
 
 pub_broker = {
@@ -15,4 +14,7 @@ def test_pub_on():
     )
     assert sensor.on()
 
+
+if __name__ =="__main__":
+    test_pub_on()
 #def test_pub_get_data()
