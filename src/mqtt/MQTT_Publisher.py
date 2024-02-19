@@ -31,7 +31,7 @@ class Sensor():
                 client.publish("test/topic", str(message))
                 #print(f"{self.nameType}: {str(message)} ")
                 count += 1
-                time.sleep(2)
+                time.sleep(1)
         except KeyboardInterrupt:
             print("Publicação encerrada")
         client.disconnect()
