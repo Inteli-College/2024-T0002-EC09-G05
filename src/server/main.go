@@ -51,10 +51,16 @@ func setupInflux() api.WriteAPIBlocking {
 	client := influx.NewClientWithOptions("http://influxdb:8086", "admin",
 		influx.DefaultOptions().SetBatchSize(1000).SetUseGZip(true).SetPrecision(time.Second))
 
-	organization, _ := client.OrganizationsAPI().FindOrganizationByName(context.Background(), "iot")
+	organization, err := client.OrganizationsAPI().FindOrganizationByName(context.Background(), "iot")
+	if err != nil {
+		fmt.Println("Erro ao buscar a organizacao")
+		fmt.Println(err.Error())
+	}
 
-	_, err := client.BucketsAPI().FindBucketByName(context.Background(), "sensor")
-	if err != nil && err.Error() != "bucket 'sensor' not found"{
+	_, err = client.BucketsAPI().FindBucketByName(context.Background(), "sensor")
+	if err != nil {
+		fmt.Println("Erro ao buscar o bucket")
+		fmt.Println("o erro foi:", err.Error())
 
 		fmt.Println("Erro ao buscar o bucket, tentando criar um novo")
 		_, err := client.BucketsAPI().CreateBucketWithName(context.Background(), organization, bucket)
@@ -66,7 +72,6 @@ func setupInflux() api.WriteAPIBlocking {
 	} else {
 		fmt.Println("Bucket encontrado, continuando...")
 	}
-
 
 	return client.WriteAPIBlocking(org, bucket)
 }
@@ -111,7 +116,7 @@ func connectRabbitMQ() <-chan amqp.Delivery {
 	return messages
 }
 
-func handleSensorData( rabbitMessages <-chan amqp.Delivery, influxWriteAPI api.WriteAPIBlocking) {
+func handleSensorData(rabbitMessages <-chan amqp.Delivery, influxWriteAPI api.WriteAPIBlocking) {
 	batchCounter := 0
 
 	contagemIDs := make(map[string]int)
@@ -119,7 +124,7 @@ func handleSensorData( rabbitMessages <-chan amqp.Delivery, influxWriteAPI api.W
 	fmt.Println("Waiting for messages...")
 
 	for d := range rabbitMessages {
-		
+
 		os.Stdout.Sync()
 		var data SensorData
 		err := json.Unmarshal(d.Body, &data)
@@ -130,7 +135,7 @@ func handleSensorData( rabbitMessages <-chan amqp.Delivery, influxWriteAPI api.W
 			fmt.Println("Error parsing JSON: ", err)
 		}
 		saveDataToInfluxDB(data, influxWriteAPI)
-		
+
 		batchCounter++
 		if batchCounter == 1000 {
 			fmt.Println("--> Flushed batch (1000 points) to InfluxDB")
@@ -151,5 +156,5 @@ func main() {
 	go handleSensorData(rabbitMessages, influxWriteAPI)
 
 	select {}
-	
+
 }

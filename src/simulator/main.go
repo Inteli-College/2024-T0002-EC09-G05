@@ -40,11 +40,11 @@ func configureClient(clientName string) mqtt.Client {
 	opts.SetPassword("guest")
 
 	opts.OnConnect = func(client mqtt.Client) {
-		fmt.Println("Connected")
+		fmt.Println("Connected as "+ clientName)
 	}
 
 	opts.OnConnectionLost = func(client mqtt.Client, err error) {
-		fmt.Printf("Connect lost: %v", err)
+		fmt.Printf(clientName, "-> Connect lost: %v", err)
 	}
 
 	client := mqtt.NewClient(opts)

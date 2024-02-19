@@ -18,7 +18,7 @@ services:
 
 
   influxdb:
-    image: influxdb:latest
+    image: influxdb:2.7.5-alpine
     container_name: influxdb
     environment:
       DOCKER_INFLUXDB_INIT_MODE: setup
