@@ -1,16 +1,16 @@
 package main
 
 import (
+	"os"
+	"log"
+	"fmt"
+	"time"
+	"strings"
 	"context"
 	"encoding/json"
-	"fmt"
-	"log"
-	"os"
-	"time"
-
-	influx "github.com/influxdata/influxdb-client-go/v2"
-	"github.com/influxdata/influxdb-client-go/v2/api"
 	amqp "github.com/rabbitmq/amqp091-go"
+	"github.com/influxdata/influxdb-client-go/v2/api"
+	influx "github.com/influxdata/influxdb-client-go/v2"
 )
 
 type SensorData struct {
@@ -58,26 +58,30 @@ func setupInflux() api.WriteAPIBlocking {
 	}
 
 	_, err = client.BucketsAPI().FindBucketByName(context.Background(), "sensor")
-	if err != nil {
-		fmt.Println("Erro ao buscar o bucket")
-		fmt.Println("o erro foi:", err.Error())
 
-		fmt.Println("Erro ao buscar o bucket, tentando criar um novo")
+	if err != nil && strings.Contains(err.Error(), "not found") {
+
+		fmt.Printf("Erro ao buscar o bucket '%s', tentando criar um novo\n", bucket)
 		_, err := client.BucketsAPI().CreateBucketWithName(context.Background(), organization, bucket)
+
 		if err != nil {
 			fmt.Println("Erro ao criar o bucket")
 			fmt.Println(err.Error())
+			os.Exit(1)
+
+		} else {
+			fmt.Printf("Bucket %s criado com sucesso\n", bucket)
 		}
 
 	} else {
-		fmt.Println("Bucket encontrado, continuando...")
+		fmt.Printf("Bucket '%s' encontrado, continuando...\n", bucket)
 	}
 
 	return client.WriteAPIBlocking(org, bucket)
 }
 
 func connectRabbitMQ() <-chan amqp.Delivery {
-	conn, err := amqp.Dial("amqp://guest:guest@rabbitmq:5672/")
+	conn, err := amqp.Dial("amqp://consumerUser:consumerPassword@rabbitmq:5672/")
 	if err != nil {
 		log.Fatalf("Failed to connect to RabbitMQ: %v", err)
 		defer conn.Close()
@@ -88,20 +92,8 @@ func connectRabbitMQ() <-chan amqp.Delivery {
 		defer ch.Close()
 	}
 
-	q, err := ch.QueueDeclare(
-		"MQTTQueue", // name of the queue
-		true,        // durable
-		false,       // delete when unused
-		false,       // exclusive
-		false,       // no-wait
-		nil,         // arguments
-	)
-	if err != nil {
-		log.Fatalf("Failed to declare a queue: %v", err)
-	}
-
 	messages, _ := ch.Consume(
-		q.Name, // queue
+		"MQTTQueue", // queue
 		"",     // consumer
 		true,   // auto-acknowledge
 		false,  // exclusive
