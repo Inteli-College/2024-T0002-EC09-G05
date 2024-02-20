@@ -1,10 +1,13 @@
 package main
 
 import (
+	"crypto/tls"
+	"crypto/x509"
 	"encoding/json"
 	"fmt"
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"math/rand"
+	"os"
 	"time"
 )
 
@@ -17,6 +20,28 @@ type SensorData struct {
 	PM10_0    float32 `json:"pm10_0"`
 	Temp      float32 `json:"temp"`
 	Hum       float32 `json:"hum"`
+}
+
+func configureSSL() *tls.Config {
+    certpool := x509.NewCertPool()
+    ca, err := os.ReadFile("/app/certs/cert.pem") // CA cert
+    if err != nil {
+        fmt.Printf("Erro ao ler arquivo de certificado: %s\n", err)
+        os.Exit(1)
+    }
+    certpool.AppendCertsFromPEM(ca)
+
+    // Carrega o certificado e a chave do cliente
+    cert, err := tls.LoadX509KeyPair("/app/certs/client.crt", "/app/certs/client.key")
+    if err != nil {
+        fmt.Printf("Erro ao carregar o par de certificado/chave do cliente: %s\n", err)
+        os.Exit(1)
+    }
+
+    return &tls.Config{
+        RootCAs:      certpool,
+        Certificates: []tls.Certificate{cert},
+    }
 }
 
 func generateSensorData(lastData SensorData) SensorData {
@@ -32,12 +57,13 @@ func generateSensorData(lastData SensorData) SensorData {
 	}
 }
 
-func configureClient(clientName string) mqtt.Client {
+func configureClient(certificate *tls.Config, clientName string) mqtt.Client {
 	opts := mqtt.NewClientOptions()
-	opts.AddBroker("rabbitmq:1883")
+	opts.AddBroker("ssl://rabbitmq:8883")
 	opts.SetClientID(clientName)
-	opts.SetUsername("guest")
-	opts.SetPassword("guest")
+	opts.SetUsername("publisherUser")
+	opts.SetPassword("publisherPassword")
+	opts.SetTLSConfig(certificate)
 
 	opts.OnConnect = func(client mqtt.Client) {
 		fmt.Println("Connected as "+ clientName)
@@ -55,9 +81,9 @@ func configureClient(clientName string) mqtt.Client {
 	return client
 }
 
-func simulateSensor(clientName string) {
+func simulateSensor(certificate *tls.Config, clientName string) {
 
-	client := configureClient(clientName)
+	client := configureClient(certificate, clientName)
 
 	currentData := SensorData{
 		SensorId:  clientName,
@@ -90,16 +116,19 @@ func simulateSensor(clientName string) {
 }
 
 func main() {
-	go simulateSensor("Liberdade")
-	go simulateSensor("Luz")
-	go simulateSensor("Butantã")
-	go simulateSensor("Morumbi")
-	go simulateSensor("Pinheiros")
-	go simulateSensor("Ipiranga")
-	go simulateSensor("Parelheiros")
-	go simulateSensor("Grajaú")
-	go simulateSensor("Moema")
-	go simulateSensor("Vila Mariana")
-	go simulateSensor("Paulista")
+
+	sslCertificate := configureSSL()
+
+	go simulateSensor(sslCertificate, "Liberdade")
+	go simulateSensor(sslCertificate, "Luz")
+	go simulateSensor(sslCertificate, "Butantã")
+	go simulateSensor(sslCertificate, "Morumbi")
+	go simulateSensor(sslCertificate, "Pinheiros")
+	go simulateSensor(sslCertificate, "Ipiranga")
+	go simulateSensor(sslCertificate, "Parelheiros")
+	go simulateSensor(sslCertificate, "Grajaú")
+	go simulateSensor(sslCertificate, "Moema")
+	go simulateSensor(sslCertificate, "Vila Mariana")
+	go simulateSensor(sslCertificate, "Paulista")
 	select {}
 }

@@ -39,7 +39,6 @@ Assim como na anterior, devemos conversar com o stakeholder sobre um valor estim
 ### Dificuldade na implementação
 Sendo um projeto de tecnologia, a implementação requer mão de obra qualificada. Devemos discutir com o stakeholder as melhores medidas para que a instalação do sistema ocorra da melhor maneira possível.
 
-
 ### Vulnerabilidade a vazamento de dados
 Devido à nossa inexpêriencia em projetos de tanta exposição, sempre há o risco de ataques ao sistema. Devemos realizar a maior variedade de testes possíveis e corrigir todas as falhas comuns e conhecidas antes da entrega do projeto.
 

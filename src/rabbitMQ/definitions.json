@@ -1,32 +1,45 @@
 {
   "users": [
     {
-      "name": "guest",
-      "password_hash": "R184F4Fs6JLdo8tFqRjWnkJL2DlAZJupxEqkO/8kfV/G63+z",
-      "hashing_algorithm": "rabbit_password_hashing_sha256",
-      "tags": "administrator"
-    },
-    {
       "name": "admin",
       "password_hash": "FGA5ZeTOLHnIp4ZjxIj0PsShW/DpLgdYAlHsbli7KMMa8Z0O",
       "hashing_algorithm": "rabbit_password_hashing_sha256",
       "tags": "administrator"
+    },
+    {
+      "name": "consumerUser",
+      "password_hash": "yliu4og5kQqkmfmQ4jSOagapi9XuOEMUvwZHBmjEonEYjfea",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": "none"
+    },
+    {
+      "name": "publisherUser",
+      "password_hash": "YxNz8wcBThqaWy9TAVbawFS2Cmwf6oYUJmcrQMP+j0lt5UKB",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": "none"
     }
   ],
   "permissions": [
-    {
-      "user": "guest",
-      "vhost": "/",
-      "configure": ".*",
-      "write": ".*",
-      "read": ".*"
-    },
     {
       "user": "admin",
       "vhost": "/",
       "configure": ".*",
       "write": ".*",
       "read": ".*"
+    },
+    {
+      "user": "consumerUser",
+      "vhost": "/",
+      "configure": "^$",
+      "write": "^$",
+      "read": "MQTTQueue"
+    },
+    {
+      "user": "publisherUser",
+      "vhost": "/",
+      "configure": "^$",
+      "write": "amq.topic",
+      "read": "^$"
     }
   ],
   "vhosts": [
