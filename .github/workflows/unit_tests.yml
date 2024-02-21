@@ -31,4 +31,4 @@ jobs:
     - name: Run Docker Compose and execute tests script
       run: |
         cd src
-        ./run_test.sh
+        ./run_tests.sh
