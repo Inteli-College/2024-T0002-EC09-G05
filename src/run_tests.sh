@@ -5,16 +5,17 @@ status=1
 echo "Iniciando execução do script de teste..."
 echo "subindo contêineres de teste..."
 echo
-docker compose -f docker-compose-test.yaml up --build -d > /dev/null
+docker compose -f docker-compose-test.yaml up --build -d
 echo
 for (( i=1; i<=10; i++ ))
 do
     echo "Checkando existência do container de testes... ($i de 10)"
     
     if docker container inspect -f '{{.State.Running}}' tests; then
-        sleep 2
-        if docker exec  tests go test; then
-            echo "Teste executado com sucesso."
+        echo "Rodando testes... aguarde..."
+        if docker exec -w /app tests go test; then
+            echo
+            echo "--> Teste executado com sucesso."
             status=0
         else
             echo "Teste falhou"
@@ -31,7 +32,8 @@ do
 done
 
 
-
+echo "Limpando contêineres..."
+echo
 docker compose -f docker-compose-test.yaml down
 
 exit $status
