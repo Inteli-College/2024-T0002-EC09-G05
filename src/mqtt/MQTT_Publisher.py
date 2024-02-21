@@ -18,6 +18,9 @@ class Sensor():
         self.connection = False
         self.counter = 10
 
+        self.first_number = False
+        self.new_number = 0
+
     def on(self, broker, test={"tested":False,"sec":0}):
         
         # Conecte ao broker
@@ -49,16 +52,21 @@ class Sensor():
         return self.connection
     
     def get_data(self, init): 
-        
-        self.delta += 1/8
+        if self.first_number == False:
+            self.first_number = True
+        else:
+            init = self.new_number
+
+        self.delta += 1/2
         if self.delta > 2:
             self.delta = 0
             rand = (random.uniform(self._min, self._max))
-            init = rand*abs((rand/self._max)+(rand/self._min))
+            self.new_number = rand*abs((rand/self._max)+(rand/self._min))
         
         
         variance = round(abs(np.random.normal(0,5))*math.cos(self.delta),1)
         value = (init+variance)
+
         if value > self._max:
             value = self._max
         if value < self._min:
