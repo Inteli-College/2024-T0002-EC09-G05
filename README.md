@@ -6,7 +6,7 @@
 
 # Planejamento de hiperconectividade para cidades inteligentes
 
-## Grupo 4
+## Grupo 5
 
 ## :student: Integrantes: 
 - <a href="https://www.linkedin.com/in/bianca-cassemiro/">Bianca Cassemiro Lima</a>
