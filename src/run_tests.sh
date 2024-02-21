@@ -5,7 +5,7 @@ status=1
 echo "Iniciando execução do script de teste..."
 echo "subindo contêineres de teste..."
 echo
-docker compose -f docker-compose-test.yaml up --build -d
+docker compose -f docker-compose-test.yaml up --build -d > /dev/null
 echo
 for (( i=1; i<=10; i++ ))
 do
