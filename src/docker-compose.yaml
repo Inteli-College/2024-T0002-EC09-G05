@@ -28,7 +28,7 @@ services:
     ports:
     - "8086:8086"
     healthcheck:
-      test: "curl -f http://3.83.39.213:8086/ping"
+      test: "curl -f http://172.31.82.141:8086/ping"
       interval: 2s
       timeout: 2s
       retries: 20
