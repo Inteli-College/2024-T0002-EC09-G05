@@ -23,7 +23,7 @@ class Sensor():
         self.start_wave = True
         self.current_position = 0
         self.go_position = 0
-        self.wave_size = 6
+        self.wave_size = 0
 
     def on(self, broker, test={"tested":False,"sec":0}):
         
@@ -59,7 +59,7 @@ class Sensor():
         value = 0
 
         if self.status == "new wave":
-            self.wave_size = 6
+            self.wave_size = 2
             if self.start_wave == True:
                 self.current_position = (random.randrange(self._min, self._max))
                 self.start_wave == False
@@ -74,6 +74,15 @@ class Sensor():
             
         elif self.status == "transtion":
             print(f"Indo de {self.current_position} para {self.go_position}")
+
+
+            difference = self.current_position - self.go_position
+            
+            pos_or_neg = (difference > 0) - (0 > difference)
+
+            print(difference, pos_or_neg)
+            self.current_position -= pos_or_neg
+            value = self.current_position
             if ( self.current_position == self.go_position):
                  self.current_position = self.go_position
                  self.status = "new wave"
