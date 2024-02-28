@@ -1,4 +1,4 @@
-package main
+package sensor
 
 import (
 	"fmt"
@@ -114,7 +114,7 @@ func (s *Sensor) generateWaveData() string {
 }
 
 func main() {
-	s := NewSensor("sensor", 0, 100)
+	s := NewSensor("sensor", -10, 10)
 	broker := map[string]string{"link": "2638385848004a349ca166f397873de7.s1.eu.hivemq.cloud", "port": "8883"}
 	test := map[string]interface{}{"tested": false, "sec": 0}
 
