@@ -48,3 +48,8 @@ python main.py
  ## Funcionamento do módulo 
 Caso todas as etapas acima estejam satisfeitas, o resultado esperado encontra-se neste vídeo de demonstração: [Click Para Ver](https://drive.google.com/drive/folders/1mXoaW-fK-zhebGrNRBtqksd4BWKMuF36?usp=sharing)
 
+**Resultado esperado**
+![img alt](/img/code_main-sensor-test_sprint_01.png)
+![img alt](/img/code_sensor-def-get_data_sprint_01.png)
+![img alt](/img/code_sensor-def-on_sprint_01.png)
+![img alt](/img/code_sensor-metodo-construtor_sprint_01.png)

@@ -2,6 +2,7 @@ version: '3'
 
 services:
 
+
   rabbitmq:
     container_name: rabbitmq
     build: ./rabbitMQ
@@ -14,6 +15,7 @@ services:
       timeout: 2s
       retries: 20
     restart: always
+
 
   influxdb:
     image: influxdb:2.7.5-alpine
@@ -28,10 +30,11 @@ services:
     ports:
     - "3005:8086"
     healthcheck:
-      test: "curl -f localhost:8086/ping"
+      test: "curl -f http://localhost:8086/ping"
       interval: 2s
       timeout: 2s
       retries: 20
+
 
   server:
     container_name: server
@@ -45,6 +48,7 @@ services:
         condition: service_healthy
       influxdb:
         condition: service_healthy
+
 
   simulator:
     container_name: simulator
