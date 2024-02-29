@@ -26,7 +26,7 @@ services:
       DOCKER_INFLUXDB_INIT_BUCKET: test
       DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: admin
     ports:
-    - "8086:8086"
+    - "3005:8086"
     healthcheck:
       test: "curl -f localhost:8086/ping"
       interval: 2s
