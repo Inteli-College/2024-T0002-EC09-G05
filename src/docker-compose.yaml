@@ -39,7 +39,7 @@ services:
     volumes:
       - ./server:/app
     ports:
-    - 8080:8080
+    - 10000:8080
     depends_on:
       rabbitmq:
         condition: service_healthy
