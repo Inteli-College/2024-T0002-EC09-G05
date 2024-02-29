@@ -67,7 +67,7 @@ func (s *Sensor) generateWaveData() string {
 	var value float64
 
 	if s.status == "new wave" {
-		s.waveSize = 2
+		s.waveSize = 5
 		if s.startWave == true {
 			s.currentPosition = float64(rand.Intn(int(s.max-s.min)) + int(s.min))
 			s.startWave = false
