@@ -117,7 +117,6 @@ func simulateSensor(certificate *tls.Config, clientName string) {
 }
 
 func main() {
-
 	sslCertificate := configureSSL()
 
 	go simulateSensor(sslCertificate, "Liberdade")
