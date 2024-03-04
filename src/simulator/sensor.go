@@ -1,4 +1,4 @@
-package sensor
+package main
 
 import (
 	"fmt"
