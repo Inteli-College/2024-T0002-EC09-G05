@@ -1,0 +1,22 @@
+# kubernetes/server-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-deployment
+spec:
+  selector:
+    matchLabels:
+      app: server
+  template:
+    metadata:
+      labels:
+        app: server
+    spec:
+      initContainers:
+      - name: wait-for-influxdb
+        image: curlimages/curl:latest
+        command: ['sh', '-c', 'until curl -f http://influxdb-service:8086/ping; do echo waiting for influxdb; sleep 2; done;']
+      containers:
+      - name: server
+        image: servertest:latest
+        imagePullPolicy: Never

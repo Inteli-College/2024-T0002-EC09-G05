@@ -47,8 +47,8 @@ func setupInflux() api.WriteAPIBlocking {
 
 	org := "iot"
 	bucket := "sensor"
-
-	client := influx.NewClientWithOptions("http://influxdb:8086", "admin",
+	fmt.Println("Setting up InfluxDB.........")
+	client := influx.NewClientWithOptions("http://influxdb-service:8086", "admin",
 		influx.DefaultOptions().SetBatchSize(1000).SetUseGZip(true).SetPrecision(time.Second))
 
 	organization, err := client.OrganizationsAPI().FindOrganizationByName(context.Background(), "iot")

@@ -1,0 +1,13 @@
+# kubernetes/influxdb-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: influxdb-service
+spec:
+  type: NodePort
+  ports:
+  - port: 8086
+    targetPort: 8086
+    nodePort: 30086
+  selector:
+    app: influxdb

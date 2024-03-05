@@ -1,0 +1,11 @@
+FROM golang:latest
+
+WORKDIR /app
+
+COPY . .
+
+RUN go mod tidy -e
+
+RUN go build
+
+CMD [ "./server" ]
