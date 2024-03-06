@@ -6,20 +6,20 @@ import math
 
 
 class Sensor():
-    def __init__(self, name, min, max) -> None:
+    def __init__(self, name, min, max, broker) -> None:
         self.nameType = name
         self.delta = 0
         self._min = min
         self._max = max
-
+        self.broker = broker
 
     
-    def on(self, broker):
+    def on(self):
         # Configuração do cliente
         client = mqtt.Client("python_publisher")
 
         # Conecte ao broker
-        client.connect(broker['link'], broker['port'], 30)
+        client.connect(self.broker['link'], self.broker['port'], 30)
 
         # Loop para publicar mensagens continuamente
         try:
