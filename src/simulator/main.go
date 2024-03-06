@@ -5,6 +5,7 @@ import (
 	"crypto/x509"
 	"encoding/json"
 	"fmt"
+	"math"
 	"math/rand"
 	"os"
 	"time"
@@ -116,19 +117,99 @@ func simulateSensor(certificate *tls.Config, clientName string) {
 	}
 }
 
-func main() {
-	sslCertificate := configureSSL()
+type Sensor struct {
+	nameType        string
+	delta           float64
+	min             float64
+	max             float64
+	connection      bool
+	counter         int
+	status          string
+	startWave       bool
+	currentPosition float64
+	goPosition      float64
+	waveSize        int
+}
 
-	go simulateSensor(sslCertificate, "Liberdade")
-	go simulateSensor(sslCertificate, "Luz")
-	go simulateSensor(sslCertificate, "Butantã")
-	go simulateSensor(sslCertificate, "Morumbi")
-	go simulateSensor(sslCertificate, "Pinheiros")
-	go simulateSensor(sslCertificate, "Ipiranga")
-	go simulateSensor(sslCertificate, "Parelheiros")
-	go simulateSensor(sslCertificate, "Grajaú")
-	go simulateSensor(sslCertificate, "Moema")
-	go simulateSensor(sslCertificate, "Vila Mariana")
-	go simulateSensor(sslCertificate, "Paulista")
-	select {}
+func NewSensor(name string, min float64, max float64) *Sensor {
+	return &Sensor{
+		nameType:        name,
+		min:             min,
+		max:             max,
+		connection:      false,
+		counter:         10,
+		status:          "new wave",
+		startWave:       true,
+		currentPosition: 0,
+		goPosition:      0,
+		waveSize:        0,
+	}
+}
+
+func (s *Sensor) GenerateWaveData() string {
+	var value float64
+
+	if s.status == "new wave" {
+		s.waveSize = 5
+		if s.startWave {
+			s.currentPosition = float64(rand.Intn(int(s.max-s.min)) + int(s.min))
+			s.startWave = false
+			value = s.currentPosition
+		}
+		s.status = "wave"
+	} else if s.status == "wave" {
+		s.waveSize -= 1
+		value = s.currentPosition + math.Round(math.Abs(rand.NormFloat64()*5)*math.Cos(s.delta)*10)/10
+		if s.waveSize <= 0 {
+			s.status = "transtion"
+			s.goPosition = float64(rand.Intn(int(s.max-s.min)) + int(s.min))
+		}
+	} else if s.status == "transtion" {
+		fmt.Printf("Indo de %.2f para %.2f\n", s.currentPosition, s.goPosition)
+		posOrNeg := 0.0
+		difference := s.currentPosition - s.goPosition
+
+		if difference > 0 {
+			posOrNeg = 1.0
+		} else {
+			posOrNeg = -1.0
+		}
+
+		fmt.Println(difference, posOrNeg)
+		s.currentPosition -= posOrNeg
+		value = s.currentPosition
+		if s.currentPosition == s.goPosition {
+			s.currentPosition = s.goPosition
+			s.status = "new wave"
+		}
+	} else {
+		fmt.Println("Erro")
+	}
+
+	if value > s.max {
+		value = s.max
+	}
+	if value < s.min {
+		value = s.min
+	}
+
+	return fmt.Sprintf("%.2f", value)
+}
+
+func main() {
+	// sslCertificate := configureSSL()
+	s := NewSensor("sensor", -10, 10)
+	fmt.Fprintf(os.Stdout, "Valores do Sensor Simulado: %s\n", s.GenerateWaveData())
+	// go simulateSensor(sslCertificate, "Liberdade")
+	// go simulateSensor(sslCertificate, "Luz")
+	// go simulateSensor(sslCertificate, "Butantã")
+	// go simulateSensor(sslCertificate, "Morumbi")
+	// go simulateSensor(sslCertificate, "Pinheiros")
+	// go simulateSensor(sslCertificate, "Ipiranga")
+	// go simulateSensor(sslCertificate, "Parelheiros")
+	// go simulateSensor(sslCertificate, "Grajaú")
+	// go simulateSensor(sslCertificate, "Moema")
+	// go simulateSensor(sslCertificate, "Vila Mariana")
+	// go simulateSensor(sslCertificate, "Paulista")
+	// select {}
 }
