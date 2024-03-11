@@ -7,6 +7,7 @@ import math
 
 class Sensor():
     def __init__(self, name, min, max) -> None:
+        
         self.nameType = name
         self.delta = 0
         self._min = min
@@ -18,6 +19,12 @@ class Sensor():
         self.connection = False
         self.counter = 10
 
+        self.status = "new wave"
+        self.start_wave = True
+        self.current_position = 0
+        self.go_position = 0
+        self.wave_size = 0
+
     def on(self, broker, test={"tested":False,"sec":0}):
         
         # Conecte ao broker
@@ -26,9 +33,9 @@ class Sensor():
         self.counter = test["sec"]
         # Loop para publicar mensagens continuamente
         try:
-            rand_number = random.uniform(self._min, self._max)
+            
             while self.connected(test):
-                message = self.get_data(init=rand_number)
+                message = self.generate_wave_data()
                 self.client.publish("test/topic", str(message))
                 time.sleep(1)
         except KeyboardInterrupt:
@@ -48,17 +55,41 @@ class Sensor():
 
         return self.connection
     
-    def get_data(self, init): 
-        
-        self.delta += 1/8
-        if self.delta > 2:
-            self.delta = 0
-            rand = (random.uniform(self._min, self._max))
-            init = rand*abs((rand/self._max)+(rand/self._min))
-        
-        
-        variance = round(abs(np.random.normal(0,5))*math.cos(self.delta),1)
-        value = (init+variance)
+    def generate_wave_data(self): 
+        value = 0
+
+        if self.status == "new wave":
+            self.wave_size = 2
+            if self.start_wave == True:
+                self.current_position = (random.randrange(self._min, self._max))
+                self.start_wave == False
+                value = self.current_position
+            self.status = "wave"
+        elif self.status == "wave":
+            self.wave_size -= 1
+            value = self.current_position + round(abs(np.random.normal(0,5))*math.cos(self.delta),1)
+            if ( self.wave_size <= 0):
+                self.status = "transtion"
+                self.go_position = (random.randrange(self._min, self._max))
+            
+        elif self.status == "transtion":
+            print(f"Indo de {self.current_position} para {self.go_position}")
+
+
+            difference = self.current_position - self.go_position
+            
+            pos_or_neg = (difference > 0) - (0 > difference)
+
+            print(difference, pos_or_neg)
+            self.current_position -= pos_or_neg
+            value = self.current_position
+            if ( self.current_position == self.go_position):
+                 self.current_position = self.go_position
+                 self.status = "new wave"
+        else: 
+            "Erro"
+
+
         if value > self._max:
             value = self._max
         if value < self._min:
@@ -68,3 +99,21 @@ class Sensor():
         
         
     
+
+
+
+
+
+
+# init = random.uniform(self._min, self._max)
+
+
+# self.delta += 1/2
+# if self.delta > 2:
+#     self.delta = 0
+#     rand = (random.uniform(self._min, self._max))
+#     self.new_number = rand*abs((rand/self._max)+(rand/self._min))
+
+
+# variance = round(abs(np.random.normal(0,5))*math.cos(self.delta),1)
+# value = (init+variance)

@@ -7,8 +7,8 @@ pub_broker = {
 
 temperature_sensor = Sensor(
     name="temperatura",
-    min = -40,
-    max = 70
+    min = -10,
+    max = 10
 )
 
 

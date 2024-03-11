@@ -5,10 +5,11 @@ import (
 	"crypto/x509"
 	"encoding/json"
 	"fmt"
-	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"math/rand"
 	"os"
 	"time"
+
+	mqtt "github.com/eclipse/paho.mqtt.golang"
 )
 
 type SensorData struct {
@@ -23,25 +24,25 @@ type SensorData struct {
 }
 
 func configureSSL() *tls.Config {
-    certpool := x509.NewCertPool()
-    ca, err := os.ReadFile("/app/certs/cert.pem") // CA cert
-    if err != nil {
-        fmt.Printf("Erro ao ler arquivo de certificado: %s\n", err)
-        os.Exit(1)
-    }
-    certpool.AppendCertsFromPEM(ca)
+	certpool := x509.NewCertPool()
+	ca, err := os.ReadFile("/app/certs/cert.pem") // CA cert
+	if err != nil {
+		fmt.Printf("Erro ao ler arquivo de certificado: %s\n", err)
+		os.Exit(1)
+	}
+	certpool.AppendCertsFromPEM(ca)
 
-    // Carrega o certificado e a chave do cliente
-    cert, err := tls.LoadX509KeyPair("/app/certs/client.crt", "/app/certs/client.key")
-    if err != nil {
-        fmt.Printf("Erro ao carregar o par de certificado/chave do cliente: %s\n", err)
-        os.Exit(1)
-    }
+	// Carrega o certificado e a chave do cliente
+	cert, err := tls.LoadX509KeyPair("/app/certs/client.crt", "/app/certs/client.key")
+	if err != nil {
+		fmt.Printf("Erro ao carregar o par de certificado/chave do cliente: %s\n", err)
+		os.Exit(1)
+	}
 
-    return &tls.Config{
-        RootCAs:      certpool,
-        Certificates: []tls.Certificate{cert},
-    }
+	return &tls.Config{
+		RootCAs:      certpool,
+		Certificates: []tls.Certificate{cert},
+	}
 }
 
 func generateSensorData(lastData SensorData) SensorData {
@@ -66,7 +67,7 @@ func configureClient(certificate *tls.Config, clientName string) mqtt.Client {
 	opts.SetTLSConfig(certificate)
 
 	opts.OnConnect = func(client mqtt.Client) {
-		fmt.Println("Connected as "+ clientName)
+		fmt.Println("Connected as " + clientName)
 	}
 
 	opts.OnConnectionLost = func(client mqtt.Client, err error) {
@@ -116,7 +117,6 @@ func simulateSensor(certificate *tls.Config, clientName string) {
 }
 
 func main() {
-
 	sslCertificate := configureSSL()
 
 	go simulateSensor(sslCertificate, "Liberdade")
