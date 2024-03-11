@@ -33,13 +33,11 @@ services:
       timeout: 2s
       retries: 20
 
-  server:
-    container_name: server
-    build: ./server
+  consumer:
+    container_name: consumer
+    build: ./consumer
     volumes:
-      - ./server:/app
-    ports:
-    - 8080:8080
+      - ./consumer:/app
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -54,5 +52,16 @@ services:
     depends_on:
       rabbitmq:
         condition: service_healthy
+      influxdb:
+        condition: service_healthy
+
+  server:
+    container_name: server
+    build: ./server
+    volumes:
+      - ./server:/app
+    ports:
+    - 8080:8080
+    depends_on:
       influxdb:
         condition: service_healthy

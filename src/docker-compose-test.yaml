@@ -39,11 +39,11 @@ services:
       timeout: 2s
       retries: 20
 
-  server:
-    container_name: server
-    build: ./server
+  consumer:
+    container_name: consumer
+    build: ./consumer
     volumes:
-      - ./server:/app
+      - ./consumer:/app
     ports:
     - 8080:8080
     healthcheck:
