@@ -24,9 +24,14 @@ ENV/
 src/influxdb/
 src/connect-plugins/
 
-src/tmp
-src/server/tmp
-src/simulator/tmp
+**/tmp
 
-src/server/erl_crash.dump
-src/simulator/erl_crash.dump
+src/server/server
+src/simulator/simulator
+src/subscriber/subscriber
+
+**/.air.toml
+
+go.work.sum
+
+**/erl_crash.dump

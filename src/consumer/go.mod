@@ -1,8 +1,11 @@
-module g5/tests
+module g5/consumer
 
 go 1.22.0
 
-require github.com/influxdata/influxdb-client-go/v2 v2.13.0
+require (
+	github.com/influxdata/influxdb-client-go/v2 v2.13.0
+	github.com/rabbitmq/amqp091-go v1.9.0
+)
 
 require (
 	github.com/apapsch/go-jsonmerge/v2 v2.0.0 // indirect

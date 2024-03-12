@@ -1,152 +1,75 @@
 package main
 
 import (
-	"os"
-	"log"
 	"fmt"
-	"time"
-	"strings"
-	"context"
-	"encoding/json"
-	amqp "github.com/rabbitmq/amqp091-go"
+	"net/http"
+	"g5/server/db"
+	"github.com/gin-gonic/gin"
 	"github.com/influxdata/influxdb-client-go/v2/api"
-	influx "github.com/influxdata/influxdb-client-go/v2"
 )
 
-type SensorData struct {
-	Sensor_id string  `json:"sensor_id"`
-	Timestamp int64   `json:"timestamp"`
-	PM1_0     float32 `json:"pm1_0"`
-	PM2_5     float32 `json:"pm2_5"`
-	PM4_0     float32 `json:"pm4_0"`
-	PM10_0    float32 `json:"pm10_0"`
-	Temp      float32 `json:"temp"`
-	Hum       float32 `json:"hum"`
+type GetDataByRelativeTimeBody struct {
+	StartTime  int      `json:"start_time"`
+	EndTime    *int     `json:"end_time,omitempty"`
+	Aggregator int      `json:"aggregator"`
+	Field      []string `json:"field"`
 }
 
-func saveDataToInfluxDB(data SensorData, writeAPI api.WriteAPIBlocking) {
-	p := influx.NewPointWithMeasurement("medicoes").
-		AddTag("sensor_id", data.Sensor_id).
-		AddField("hum", data.Hum).
-		AddField("temp", data.Temp).
-		AddField("pm2_5", data.PM2_5).
-		AddField("pm1_0", data.PM1_0).
-		AddField("pm4_0", data.PM4_0).
-		AddField("pm10_0", data.PM10_0).
-		SetTime(time.Unix(data.Timestamp, 0))
+func SetupRouter(queryAPI api.QueryAPI) *gin.Engine {
 
-	// Escreve o ponto
-	err := writeAPI.WritePoint(context.Background(), p)
-	if err != nil {
-		fmt.Println("ERRO NA OPERACAO DE WRITE")
-		fmt.Println(err.Error())
-	}
-}
+	r := gin.Default()
 
-func setupInflux() api.WriteAPIBlocking {
+	r.POST("/getDataByRelativeTime", func(c *gin.Context) {
 
-	org := "iot"
-	bucket := "sensor"
+		var req GetDataByRelativeTimeBody
 
-	client := influx.NewClientWithOptions("http://influxdb:8086", "admin",
-		influx.DefaultOptions().SetBatchSize(1000).SetUseGZip(true).SetPrecision(time.Second))
+		if err := c.ShouldBindJSON(&req); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
 
-	organization, err := client.OrganizationsAPI().FindOrganizationByName(context.Background(), "iot")
-	if err != nil {
-		fmt.Println("Erro ao buscar a organizacao")
-		fmt.Println(err.Error())
-	}
+		fmt.Println(req.EndTime)
 
-	_, err = client.BucketsAPI().FindBucketByName(context.Background(), "sensor")
-
-	if err != nil && strings.Contains(err.Error(), "not found") {
-
-		fmt.Printf("Erro ao buscar o bucket '%s', tentando criar um novo\n", bucket)
-		_, err := client.BucketsAPI().CreateBucketWithName(context.Background(), organization, bucket)
+		res, err := db.GetDataByRelativeTime(
+			queryAPI,
+			req.StartTime,
+			req.EndTime,
+			req.Aggregator,
+			req.Field,
+		)
 
 		if err != nil {
-			fmt.Println("Erro ao criar o bucket")
-			fmt.Println(err.Error())
-			os.Exit(1)
-
-		} else {
-			fmt.Printf("Bucket %s criado com sucesso\n", bucket)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
 		}
 
-	} else {
-		fmt.Printf("Bucket '%s' encontrado, continuando...\n", bucket)
-	}
+		c.JSON(http.StatusOK, (res))
+	})
 
-	return client.WriteAPIBlocking(org, bucket)
-}
+	r.GET("/GetDataByTimestamp", func(c *gin.Context) {
+	})
 
-func connectRabbitMQ() <-chan amqp.Delivery {
-	conn, err := amqp.Dial("amqp://consumerUser:consumerPassword@rabbitmq:5672/")
-	if err != nil {
-		log.Fatalf("Failed to connect to RabbitMQ: %v", err)
-		defer conn.Close()
-	}
-	ch, err := conn.Channel()
-	if err != nil {
-		log.Fatalf("Failed to open a channel: %v", err)
-		defer ch.Close()
-	}
+	r.GET("/getAllSensors", func(c *gin.Context) {
 
-	messages, _ := ch.Consume(
-		"MQTTQueue", // queue
-		"",     // consumer
-		true,   // auto-acknowledge
-		false,  // exclusive
-		false,  // no-local
-		false,  // no-wait
-		nil,    // args
-	)
-	if err != nil {
-		log.Fatalf("Failed to register a consumer: %v", err)
-	}
-
-	return messages
-}
-
-func handleSensorData(rabbitMessages <-chan amqp.Delivery, influxWriteAPI api.WriteAPIBlocking) {
-	batchCounter := 0
-
-	contagemIDs := make(map[string]int)
-
-	fmt.Println("Waiting for messages...")
-
-	for d := range rabbitMessages {
-
-		os.Stdout.Sync()
-		var data SensorData
-		err := json.Unmarshal(d.Body, &data)
-
-		contagemIDs[data.Sensor_id]++
+		res, err := db.GetAllSensors(queryAPI)
 
 		if err != nil {
-			fmt.Println("Error parsing JSON: ", err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
 		}
-		saveDataToInfluxDB(data, influxWriteAPI)
 
-		batchCounter++
-		if batchCounter == 1000 {
-			fmt.Println("--> Flushed batch (1000 points) to InfluxDB")
-			fmt.Println("	", contagemIDs)
-			batchCounter = 0
-		} else if batchCounter%100 == 0 {
-			fmt.Printf("Filling batch... (%d/1000)\n", batchCounter)
-		}
-	}
+		c.JSON(http.StatusOK, (res))
+
+	})
+
+	return r
 }
 
 func main() {
 
-	influxWriteAPI := setupInflux()
+	queryAPI := db.CreateinfluxConnection()
 
-	rabbitMessages := connectRabbitMQ()
+	r := SetupRouter(queryAPI)
 
-	go handleSensorData(rabbitMessages, influxWriteAPI)
-
-	select {}
-
+	r.Run(":8080")
 }
