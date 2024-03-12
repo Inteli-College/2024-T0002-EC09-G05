@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"g5/server/db"
+	"g5/server/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/influxdata/influxdb-client-go/v2/api"
 )
@@ -18,7 +19,9 @@ type GetDataByRelativeTimeBody struct {
 func SetupRouter(queryAPI api.QueryAPI) *gin.Engine {
 
 	r := gin.Default()
-
+	r.GET("/", func(c *gin.Context) {
+		c.String(http.StatusOK, "Online!")
+	})
 	r.POST("/getDataByRelativeTime", func(c *gin.Context) {
 
 		var req GetDataByRelativeTimeBody
@@ -71,5 +74,7 @@ func main() {
 
 	r := SetupRouter(queryAPI)
 
+	go utils.PrintASCIIArt()
+	
 	r.Run(":8080")
 }
