@@ -41,7 +41,7 @@ var PM1_0 = NewSensor("PM1_0", 0, 37)
 var PM2_5 = NewSensor("PM2_5", 0, 30)
 var PM4_0 = NewSensor("PM4_0", -40, 70)
 var PM10_0 = NewSensor("PM10_0", 3, 30)
-var Temp = NewSensor("Temp", -20, 2)
+var Temp = NewSensor("Temp", -40, 70)
 var Hum = NewSensor("Hum", 20, 50)
 
 func configureSSL() *tls.Config {
@@ -98,8 +98,8 @@ func (s *Sensor) generateWaveData(currentPosition float32) float32 {
 	} else if s.status == "wave" {
 		//fmt.Println("Wave")
 		s.waveSize -= 1
-		loss := float32(math.Round(rand.NormFloat64()*2) * math.Cos(float64(time.Now().Unix())) / 10)
-		//fmt.Printf("Valor do loss %.2f", loss)
+		loss := float32(math.Cos(float64(time.Now().Unix())) * 2)
+		fmt.Printf("Valor do loss %.2f", loss)
 		value = s.currentPosition + loss
 		if s.waveSize <= 0 {
 			s.status = "transtion"
@@ -118,10 +118,8 @@ func (s *Sensor) generateWaveData(currentPosition float32) float32 {
 
 		s.currentPosition -= posOrNeg
 		value = s.currentPosition
-		//fmt.Printf("Indo de %.2f para %.2f ; Dif:  %.2f \n A: %b, B: %b", s.currentPosition, s.goPosition, difference, math.Abs(difference) <= 0.15, math.Abs(difference) >= 0.15)
-		//-3.10 ---> -3 | 3.10 ---> -3 | -3.10 ---> 3 | 3.10 ---> 3
-		// 0.10         | -6.10        | 6.10         | -0.10
-		if math.Abs(difference) >= 0.10 && math.Abs(difference) <= 0.25 {
+
+		if math.Abs(difference) >= 0.10 && math.Abs(difference) <= 1.25 {
 			s.currentPosition = s.goPosition
 			s.status = "new wave"
 		}
