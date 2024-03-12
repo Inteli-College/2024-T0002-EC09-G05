@@ -9,9 +9,13 @@ import (
 
 type Measurement struct {
 	Time     string  `json:"time"`
-	SensorID string  `json:"sensor_id"`
-	Field    string  `json:"field"`
 	Value    float32 `json:"value"`
+}
+
+type RelativeResponseJsonObj struct {
+	Field  string        `json:"field"`
+	Sensor string        `json:"sensor"`
+	Data   []Measurement `json:"data"`
 }
 
 // PEGA OS DADOS COM BASE NO TEMPO RELATIVO, POR EXEMPLO, "ULTIMOS 30 MINUTOS" OU "ENTRE 2 HORAS ATRAS E AGORA"
@@ -20,21 +24,16 @@ func GetDataByRelativeTime(
 	startTime int,
 	endTime *int,
 	aggregator int,
-	Field []string,
-) ([]Measurement, error) {
+	Fields []string,
+	Sensors []string,
+) ([]RelativeResponseJsonObj, error) {
 
-	// Montando a string de campos:
-	fieldString := `|> filter(fn: (r) => `
-	for _, f := range Field {
-		fieldString += fmt.Sprintf(` r["_field"] == "%s" or `, f)
-	}
-	fieldString = fieldString[:len(fieldString)-4] + ")"
+
 
 	// Montando a string de range:
 	rangeString := ""
 	if endTime == nil {
-	rangeString =
-		fmt.Sprintf("|> range(start: -%dm)", startTime)
+		rangeString = fmt.Sprintf("|> range(start: -%dm)", startTime)
 	} else {
 		rangeString = fmt.Sprintf("|> range(start: -%dm, stop: -%dm)", startTime, *endTime)
 	}
@@ -42,42 +41,56 @@ func GetDataByRelativeTime(
 	aggregatorString :=
 		fmt.Sprintf("|> aggregateWindow(every: %ds, fn: mean, createEmpty: false)", aggregator)
 
-	// Montando a query:
-	queryString := `
-	from(bucket:"sensor")
-	` + rangeString + `
-	|> filter(fn: (r) => r["_measurement"] == "medicoes")
-	` + fieldString + `
-	|> filter(fn: (r) => r["sensor_id"] == "Morumbi")
-	` + aggregatorString
+	response := []RelativeResponseJsonObj{}
 
-	fmt.Println(queryString)
+	for _, sensor := range Sensors {
+		for _, field := range Fields {
 
-	data, err := QueryAPI.Query(context.Background(), queryString)
+			// Montando a string de campos e sensores.:
+			fieldString := fmt.Sprintf(`|> filter(fn: (r) =>  r["_field"] == "%s")`, field)
+			sensorString := fmt.Sprintf(`|> filter(fn: (r) =>  r["sensor_id"] == "%s")`, sensor)
 
-	if err != nil {
-		return nil, err
-	}
+			// Montando a query:
+			queryString := 
+				`from(bucket:"sensor")` +
+				rangeString + 
+				`|> filter(fn: (r) => r["_measurement"] == "medicoes")` +
+				fieldString + sensorString + aggregatorString
 
-	response := []Measurement{}
+			fmt.Println(queryString)
 
-	for data.Next() {
+			data, err := QueryAPI.Query(context.Background(), queryString)
 
-		measure := Measurement{
-			Time:     data.Record().Time().String(),
-			SensorID: data.Record().ValueByKey("sensor_id").(string),
-			Field:    data.Record().Field(),
-			Value:    float32(int(data.Record().Value().(float64)*100)) / 100,
+			if err != nil {
+				return nil, err
+			}
+
+			records := []Measurement{}
+
+			for data.Next() {
+
+				measure := Measurement{
+					Time:     data.Record().Time().String(),
+					Value:    float32(int(data.Record().Value().(float64)*100)) / 100,
+				}
+
+				records = append(records, measure)
+			}
+
+			response = append(response, RelativeResponseJsonObj{
+				Field:  field,
+				Sensor: sensor,
+				Data:   records,
+			})
+
 		}
-
-		response = append(response, measure)
 	}
 
-	if len(response) > 1000 {
-		fmt.Println("[WARNING] Resposta ultrapasou 1000 entradas, truncando para as ultimas 1000")
-		fmt.Println("tamanho original:"+fmt.Sprint(len(response)))
-		return response[:1000], nil
-	} 
+	if len(response) > 2000 {
+		fmt.Println("[WARNING] Resposta ultrapasou 2000 entradas, truncando para as ultimas 2000")
+		fmt.Println("tamanho original:" + fmt.Sprint(len(response)))
+		return response[:2000], nil
+	}
 
 	return response, nil
 

@@ -13,7 +13,8 @@ type GetDataByRelativeTimeBody struct {
 	StartTime  int      `json:"start_time"`
 	EndTime    *int     `json:"end_time,omitempty"`
 	Aggregator int      `json:"aggregator"`
-	Field      []string `json:"field"`
+	Field      []string `json:"fields"`
+	Sensor     []string `json:"sensors"`
 }
 
 func SetupRouter(queryAPI api.QueryAPI) *gin.Engine {
@@ -39,6 +40,7 @@ func SetupRouter(queryAPI api.QueryAPI) *gin.Engine {
 			req.EndTime,
 			req.Aggregator,
 			req.Field,
+			req.Sensor,
 		)
 
 		if err != nil {
