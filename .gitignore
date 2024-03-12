@@ -32,7 +32,6 @@ src/subscriber/subscriber
 
 **/.air.toml
 
-**/go.sum
 go.work.sum
 
 **/erl_crash.dump
