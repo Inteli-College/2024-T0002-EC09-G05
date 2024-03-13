@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "pinia": "^2.1.7",
+    "primevue": "^3.49.1",
     "vue": "^3.4.15",
     "vue-router": "^4.2.5"
   },
@@ -24,14 +25,17 @@
     "@vitejs/plugin-vue-jsx": "^3.1.0",
     "@vue/eslint-config-prettier": "^8.0.0",
     "@vue/test-utils": "^2.4.4",
+    "autoprefixer": "^10.4.18",
     "cypress": "^13.6.3",
     "eslint": "^8.49.0",
     "eslint-plugin-cypress": "^2.15.1",
     "eslint-plugin-vue": "^9.17.0",
     "jsdom": "^24.0.0",
+    "postcss": "^8.4.35",
     "prettier": "^3.0.3",
     "start-server-and-test": "^2.0.3",
-    "vite": "^5.0.11",
+    "tailwindcss": "^3.4.1",
+    "vite": "^5.1.6",
     "vitest": "^1.2.2"
   }
 }
