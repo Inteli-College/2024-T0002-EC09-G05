@@ -1,4 +1,4 @@
-name: Testes unitários
+name: Testes de integração
 
 on:
   push:
