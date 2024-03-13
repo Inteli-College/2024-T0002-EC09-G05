@@ -73,6 +73,22 @@ services:
       influxdb:
         condition: service_healthy
 
+  server:
+    container_name: server
+    build: ./server
+    volumes:
+      - ./server:/app
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep -f air || exit 1"]
+      interval: 5s
+      timeout: 2s
+      retries: 10
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      influxdb:
+        condition: service_healthy
+
 
   tests:
     container_name: tests
@@ -85,4 +101,6 @@ services:
       server:
         condition: service_healthy
       simulator:
+        condition: service_healthy
+      consumer:
         condition: service_healthy
