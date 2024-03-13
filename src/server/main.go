@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 	"g5/server/db"
 	"g5/server/utils"
@@ -20,9 +19,11 @@ type GetDataByRelativeTimeBody struct {
 func SetupRouter(queryAPI api.QueryAPI) *gin.Engine {
 
 	r := gin.Default()
+	
 	r.GET("/", func(c *gin.Context) {
 		c.String(http.StatusOK, "Online!")
 	})
+	
 	r.POST("/getDataByRelativeTime", func(c *gin.Context) {
 
 		var req GetDataByRelativeTimeBody
@@ -32,7 +33,6 @@ func SetupRouter(queryAPI api.QueryAPI) *gin.Engine {
 			return
 		}
 
-		fmt.Println(req.EndTime)
 
 		res, err := db.GetDataByRelativeTime(
 			queryAPI,
@@ -51,12 +51,22 @@ func SetupRouter(queryAPI api.QueryAPI) *gin.Engine {
 		c.JSON(http.StatusOK, (res))
 	})
 
-	r.GET("/GetDataByTimestamp", func(c *gin.Context) {
-	})
-
 	r.GET("/getAllSensors", func(c *gin.Context) {
 
 		res, err := db.GetAllSensors(queryAPI)
+
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.JSON(http.StatusOK, (res))
+
+	})
+
+	r.GET("/getAllFields", func(c *gin.Context) {
+
+		res, err := db.GetAllFields(queryAPI)
 
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})

@@ -57,7 +57,6 @@ func GetDataByRelativeTime(
 				`|> filter(fn: (r) => r["_measurement"] == "medicoes")` +
 				fieldString + sensorString + aggregatorString
 
-			fmt.Println(queryString)
 
 			data, err := QueryAPI.Query(context.Background(), queryString)
 
@@ -98,6 +97,30 @@ func GetDataByRelativeTime(
 
 // Pega os dados com base em TIMESTAMPS, por exemplo, "ENTRE 22/06/2021 12:00" E "22/06/2021 13:00"
 func GetDataByTimestamp(QueryAPI api.QueryAPI) {
+}
+
+func GetAllFields(QueryAPI api.QueryAPI) ([]string, error) {
+	data, err := QueryAPI.Query(context.Background(), `
+
+	from(bucket: "sensor")
+	|> range(start: -1y)
+	|> filter(fn: (r) => r["_measurement"] == "medicoes")
+	|> keep(columns: ["_field"])
+	|> distinct(column: "_field")
+  
+	`)
+
+	if err != nil {
+		return nil, err
+	}
+
+	result := []string{}
+
+	for data.Next() {
+		result = append(result, data.Record().ValueByKey("_field").(string))
+	}
+	return result, nil
+
 }
 
 func GetAllSensors(QueryAPI api.QueryAPI) ([]string, error) {
