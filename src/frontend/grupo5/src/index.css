@@ -65,3 +65,24 @@
     --ring: 216 12.2% 83.9%;
   }
 }
+
+
+.filtro{
+  background-color: rgba(15, 3, 43, 0.356);
+}
+
+
+.sideMenu {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  width: 100px;
+  height: 100px;
+  border: 20px solid #f00;
+  background: #00f;
+  margin: 10px;
+}
+
+.sideMenu + .sideMenu {
+  border: 10px solid red;
+}
