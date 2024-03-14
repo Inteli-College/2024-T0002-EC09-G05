@@ -11,7 +11,7 @@
         </a>
         <div class="flex items-center w-full sm:hidden">
           <!-- Mobile menu button-->
-          <SearchBar class="w-50 ml-11" />
+          <SearchBar class="w-50 ml-11 transition-all" />
         </div>
 
         <div

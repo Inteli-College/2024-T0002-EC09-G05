@@ -1,3 +1,10 @@
+<script setup>
+
+
+</script>
 <template>
-    <h1>Erro 404</h1>
+    <div class="flex h-auto justify-center w-screen">
+        <h1>Erro 404</h1>
+        
+    </div>
 </template>

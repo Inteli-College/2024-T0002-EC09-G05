@@ -4,9 +4,10 @@ import DashboardContainer from '../components/DashboardContainer.vue'
 
 </script>
 <template>
-  <div class="default">
+  <div class="default" >
     <HeaderBar />
     <DashboardContainer />
+
   </div>
 </template>
 

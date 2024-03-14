@@ -72,10 +72,36 @@
 }
 
 
+.SideBar{
+  width: 275px;
+  top: 75px;
+  left: 10px;
+  transition: width 0.5s;
+  transition: left 0.5s;
+
+
+}
+
 .sideMenu {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   border-top: 1px solid rgb(71, 71, 71);
 
+}
+
+@media (min-width: 640px){
+  .SideBar{
+    width: 275px;
+    left: 10px;
+    
+    
+  }
+}
+
+@media (min-width: 1280px){
+  .SideBar{
+    width: 15.9%;
+    left: 0px;
+  }
 }
