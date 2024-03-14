@@ -8,7 +8,7 @@
           </a>
           <div class="flex items-center w-full sm:hidden">
             <!-- Mobile menu button-->
-              <SearchBar />
+              <SearchBar class="w-50 ml-11" />
           </div>
          
           <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static  sm:inset-auto sm:ml-6 sm:pr-0">

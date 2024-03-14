@@ -76,13 +76,6 @@
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  width: 100px;
-  height: 100px;
-  border: 20px solid #f00;
-  background: #00f;
-  margin: 10px;
-}
+  border-top: 1px solid rgb(71, 71, 71);
 
-.sideMenu + .sideMenu {
-  border: 10px solid red;
 }
