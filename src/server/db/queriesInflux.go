@@ -2,8 +2,7 @@ package db
 
 import (
 	"context"
-	"fmt"
-
+	"fmt" 
 	"github.com/influxdata/influxdb-client-go/v2/api"
 )
 
