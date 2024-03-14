@@ -1,5 +1,5 @@
 <template>
-    <CCard class="mb-3" style="max=width: 540px">
+    <CCard class="mb-3">
     <CRow class="g-0">
         <CCol :md="4">
         <CCardImage class="rounded-0" src="/images/vue.jpg" />
