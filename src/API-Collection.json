@@ -1,0 +1,109 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "ProSee",
+    "dateExported": "2024-03-15T02:40:50.271Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "332f76dc-e464-4a63-8b43-a3cef5adc930",
+            "name": "Autenticação",
+            "containerId": "",
+            "created": "2024-03-15T02:40:23.412Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "9be4c533-9349-4897-a068-819841ab23b0",
+            "name": "Dados",
+            "containerId": "",
+            "created": "2024-03-15T02:40:35.124Z",
+            "sortNum": 20000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "2a73ba6f-d580-4750-a29a-b7330ef18225",
+            "colId": "7e433c28-73b1-48ef-9966-945240dd5997",
+            "containerId": "9be4c533-9349-4897-a068-819841ab23b0",
+            "name": "Puxar dados por tempo relativo ",
+            "url": "localhost:8080/data/getDataByRelativeTime",
+            "method": "POST",
+            "sortNum": 5000,
+            "created": "2024-03-15T02:36:39.235Z",
+            "modified": "2024-03-15T02:38:32.570Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"start_time\": 60,\n  \"end_time\": 0,\n  \"aggregator\": 300,\n  \"fields\": [\"pm10_0\", \"pm4_0\"],\n  \"sensors\": [\"Pinheiros\", \"Paulista\"]\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "34fae98d-dc9e-4df9-8384-0d328ad62f7a",
+            "colId": "7e433c28-73b1-48ef-9966-945240dd5997",
+            "containerId": "332f76dc-e464-4a63-8b43-a3cef5adc930",
+            "name": "Criar conta",
+            "url": "localhost:8080/auth/register",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-03-15T02:24:19.701Z",
+            "modified": "2024-03-15T02:25:42.553Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Meu Nome\",\n  \"email\":\"meu@email.com\",\n  \"password\": \"minhasenha\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "241f06b9-6464-4009-b9b1-0f1d94f95f58",
+            "colId": "7e433c28-73b1-48ef-9966-945240dd5997",
+            "containerId": "9be4c533-9349-4897-a068-819841ab23b0",
+            "name": "Tipos de dados existentes",
+            "url": "localhost:8080/data/getAllFields",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-03-15T02:34:11.297Z",
+            "modified": "2024-03-15T02:34:53.240Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "86f65c35-890b-407c-bb21-a47e87db17ee",
+            "colId": "7e433c28-73b1-48ef-9966-945240dd5997",
+            "containerId": "9be4c533-9349-4897-a068-819841ab23b0",
+            "name": "Sensores existentes",
+            "url": "localhost:8080/data/getAllSensors",
+            "method": "GET",
+            "sortNum": 15000,
+            "created": "2024-03-15T02:36:00.711Z",
+            "modified": "2024-03-15T02:36:15.999Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "c5b8e726-324e-4dbb-abca-8907b88fd79a",
+            "colId": "7e433c28-73b1-48ef-9966-945240dd5997",
+            "containerId": "332f76dc-e464-4a63-8b43-a3cef5adc930",
+            "name": "Login",
+            "url": "localhost:8080/auth/login",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2024-03-15T02:31:18.843Z",
+            "modified": "2024-03-15T02:33:31.205Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"meu@email.com\",\n  \"password\": \"minhasenha\"\n}",
+                "form": []
+            },
+            "tests": []
+        }
+    ]
+}
