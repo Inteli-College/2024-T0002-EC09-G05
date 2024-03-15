@@ -16,7 +16,8 @@ func main() {
 
 	pg := db.SetupPostgres()
 
-	routes.SetupRoutes(r, influx, pg)
+	routes.SetupDataRoutes(r, influx, pg)
+
 	routes.SetupAuthRoutes(r, pg)
 
 	r.Use(cors.Default())

@@ -1,79 +1,84 @@
-package authpackage routes
+package auth
 
 import (
 	"g5/server/db"
 	"github.com/gin-gonic/gin"
-	"github.com/influxdata/influxdb-client-go/v2/api"
+	"github.com/go-playground/validator/v10"
 	"gorm.io/gorm"
-	"net/http"
+	// needed to validate if the incoming data is correct
 )
 
-type GetDataByRelativeTimeDTO struct {
-	StartTime  int      `json:"start_time"`
-	EndTime    *int     `json:"end_time,omitempty"`
-	Aggregator int      `json:"aggregator"`
-	Field      []string `json:"fields"`
-	Sensor     []string `json:"sensors"`
+type RegisterInput struct {
+	Email    string `json:"email" validate:"required,email"`
+	Password string `json:"password" validate:"required"`
+	Name     string `json:"name" validate:"required"`
 }
 
-func SetupRoutes(r *gin.Engine, influx api.QueryAPI, pg *gorm.DB) *gin.Engine {
+type LoginInput struct {
+	Email    string `json:"email" validate:"required,email"`
+	Password string `json:"password" validate:"required"`
+}
 
-	group := r.Group("/")
+func Login(c *gin.Context, pg *gorm.DB) {
 
-	group.GET("/", func(c *gin.Context) {
-		c.String(http.StatusOK, "Online!")
-	})
+	var validate = validator.New()
+	var input LoginInput
 
-	group.POST("/getDataByRelativeTime", func(c *gin.Context) {
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
 
-		var req GetDataByRelativeTimeDTO
+	validationErr := validate.Struct(input)
+	if validationErr != nil {
+		c.JSON(400, gin.H{"error": validationErr.Error()})
+		return
+	}
 
-		if err := c.ShouldBindJSON(&req); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
-		}
+	token, err := LoginCheck(input.Email, input.Password, pg)
 
-		res, err := db.GetDataByRelativeTime(
-			influx,
-			req.StartTime,
-			req.EndTime,
-			req.Aggregator,
-			req.Field,
-			req.Sensor,
-		)
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+	c.SetCookie("token", token, 3600, "/", "localhost", false, true)
+	c.JSON(200, gin.H{"token": token})
 
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
+}
 
-		c.JSON(http.StatusOK, (res))
-	})
+func Register(c *gin.Context, pg *gorm.DB) {
 
-	group.GET("/getAllSensors", func(c *gin.Context) {
+	var validate = validator.New()
+	var input RegisterInput
 
-		res, err := db.GetAllSensors(influx)
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
 
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
+	validationErr := validate.Struct(input)
+	if validationErr != nil {
+		c.JSON(400, gin.H{"error": validationErr.Error()})
+		return
+	}
 
-		c.JSON(http.StatusOK, (res))
+	tx := pg.First(&db.User{}, "email = ?", input.Email)
 
-	})
+	if tx.RowsAffected > 0 {
+		c.JSON(400, gin.H{"error": "Email already exists"})
+		return
+	}
 
-	group.GET("/getAllFields", func(c *gin.Context) {
+	hashedPassword := HashPassword(input.Password)
 
-		res, err := db.GetAllFields(influx)
+	u := db.User{
+		Email:    input.Email,
+		Password: hashedPassword,
+		Name:     input.Name,
+	}
 
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
-		c.JSON(http.StatusOK, (res))
+	u.SaveUser(pg, &u)
 
-	})
+	c.String(200, "Register")
 
-	return r
 }

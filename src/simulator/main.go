@@ -130,5 +130,6 @@ func main() {
 	go simulateSensor(sslCertificate, "Moema")
 	go simulateSensor(sslCertificate, "Vila Mariana")
 	go simulateSensor(sslCertificate, "Paulista")
+	
 	select {}
 }

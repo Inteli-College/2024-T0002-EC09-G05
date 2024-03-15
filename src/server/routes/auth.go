@@ -1,18 +1,17 @@
 package routes
 
 import (
+	"g5/server/auth"
 	"github.com/gin-gonic/gin"
-	"github.com/influxdata/influxdb-client-go/v2/api"
 	"gorm.io/gorm"
 )
 
-
-func SetupRoutes(r *gin.Engine, influx api.QueryAPI, pg *gorm.DB) {
+func SetupAuthRoutes(r *gin.Engine, pg *gorm.DB) {
 
 	group := r.Group("/auth")
 
-	group.POST("/login", func(c *gin.Context) {})
+	group.POST("/login", func(c *gin.Context) { auth.Login(c, pg) })
 
-	group.GET("/register", func(c *gin.Context) {})
+	group.POST("/register", func(c *gin.Context) { auth.Register(c, pg) })
 
 }

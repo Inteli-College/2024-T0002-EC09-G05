@@ -16,9 +16,9 @@ type GetDataByRelativeTimeDTO struct {
 	Sensor     []string `json:"sensors"`
 }
 
-func SetupRoutes(r *gin.Engine,influx  pg *gorm.DB) *gin.Engine {
+func SetupDataRoutes(r *gin.Engine, influx api.QueryAPI, pg *gorm.DB) *gin.Engine {
 
-	group := r.Group("/")
+	group := r.Group("/data")
 
 	group.GET("/", func(c *gin.Context) {
 		c.String(http.StatusOK, "Online!")
@@ -66,7 +66,6 @@ func SetupRoutes(r *gin.Engine,influx  pg *gorm.DB) *gin.Engine {
 	group.GET("/getAllFields", func(c *gin.Context) {
 
 		res, err := db.GetAllFields(influx)
-
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
@@ -77,4 +76,3 @@ func SetupRoutes(r *gin.Engine,influx  pg *gorm.DB) *gin.Engine {
 
 	return r
 }
-
