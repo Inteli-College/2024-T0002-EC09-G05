@@ -14,4 +14,6 @@ func SetupAuthRoutes(r *gin.Engine, pg *gorm.DB) {
 
 	group.POST("/register", func(c *gin.Context) { auth.Register(c, pg) })
 
+	group.POST("/changeUserRole", func(c *gin.Context) { auth.ChangeRole(c, pg) })
+
 }

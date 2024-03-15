@@ -1,54 +1,60 @@
 {
     "client": "Thunder Client",
     "collectionName": "ProSee",
-    "dateExported": "2024-03-15T02:40:50.271Z",
+    "dateExported": "2024-03-15T14:18:50.291Z",
     "version": "1.1",
     "folders": [
         {
-            "_id": "332f76dc-e464-4a63-8b43-a3cef5adc930",
+            "_id": "e6ea504d-b324-4795-88d1-6eb0ddf1c3a6",
             "name": "Autenticação",
             "containerId": "",
-            "created": "2024-03-15T02:40:23.412Z",
+            "created": "2024-03-15T12:08:10.492Z",
             "sortNum": 10000
         },
         {
-            "_id": "9be4c533-9349-4897-a068-819841ab23b0",
+            "_id": "f9752eb3-58f3-431e-b7fe-f1f5fced001e",
             "name": "Dados",
             "containerId": "",
-            "created": "2024-03-15T02:40:35.124Z",
+            "created": "2024-03-15T12:08:10.493Z",
             "sortNum": 20000
         }
     ],
     "requests": [
         {
-            "_id": "2a73ba6f-d580-4750-a29a-b7330ef18225",
-            "colId": "7e433c28-73b1-48ef-9966-945240dd5997",
-            "containerId": "9be4c533-9349-4897-a068-819841ab23b0",
+            "_id": "1af0a9ff-1c5e-4a33-a242-ba9af2a32ada",
+            "colId": "ba8d5098-edd1-4e0c-afd4-9bc2f1c22215",
+            "containerId": "f9752eb3-58f3-431e-b7fe-f1f5fced001e",
             "name": "Puxar dados por tempo relativo ",
             "url": "localhost:8080/data/getDataByRelativeTime",
             "method": "POST",
             "sortNum": 5000,
-            "created": "2024-03-15T02:36:39.235Z",
-            "modified": "2024-03-15T02:38:32.570Z",
-            "headers": [],
+            "created": "2024-03-15T12:08:10.496Z",
+            "modified": "2024-03-15T12:18:55.131Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE3MTEzNjg1MzUsInJvbGUiOjEsInVzZXJfaWQiOjF9.U703AvR2oaqeJ76YYBOr51X3wAuVfyATdzzdj0ipmkw"
+                }
+            ],
             "params": [],
             "body": {
                 "type": "json",
                 "raw": "{\n  \"start_time\": 60,\n  \"end_time\": 0,\n  \"aggregator\": 300,\n  \"fields\": [\"pm10_0\", \"pm4_0\"],\n  \"sensors\": [\"Pinheiros\", \"Paulista\"]\n}",
                 "form": []
             },
+            "reqType": "post",
             "tests": []
         },
         {
-            "_id": "34fae98d-dc9e-4df9-8384-0d328ad62f7a",
-            "colId": "7e433c28-73b1-48ef-9966-945240dd5997",
-            "containerId": "332f76dc-e464-4a63-8b43-a3cef5adc930",
+            "_id": "dfba94e5-d00e-4fbb-98cd-d67879f08deb",
+            "colId": "ba8d5098-edd1-4e0c-afd4-9bc2f1c22215",
+            "containerId": "e6ea504d-b324-4795-88d1-6eb0ddf1c3a6",
             "name": "Criar conta",
             "url": "localhost:8080/auth/register",
             "method": "POST",
             "sortNum": 10000,
-            "created": "2024-03-15T02:24:19.701Z",
-            "modified": "2024-03-15T02:25:42.553Z",
+            "created": "2024-03-15T12:08:10.492Z",
+            "modified": "2024-03-15T12:08:10.492Z",
             "headers": [],
             "params": [],
             "body": {
@@ -59,48 +65,79 @@
             "tests": []
         },
         {
-            "_id": "241f06b9-6464-4009-b9b1-0f1d94f95f58",
-            "colId": "7e433c28-73b1-48ef-9966-945240dd5997",
-            "containerId": "9be4c533-9349-4897-a068-819841ab23b0",
+            "_id": "77aeab31-94d4-418f-b919-d47e81ac15e7",
+            "colId": "ba8d5098-edd1-4e0c-afd4-9bc2f1c22215",
+            "containerId": "f9752eb3-58f3-431e-b7fe-f1f5fced001e",
             "name": "Tipos de dados existentes",
             "url": "localhost:8080/data/getAllFields",
             "method": "GET",
             "sortNum": 10000,
-            "created": "2024-03-15T02:34:11.297Z",
-            "modified": "2024-03-15T02:34:53.240Z",
-            "headers": [],
+            "created": "2024-03-15T12:08:10.494Z",
+            "modified": "2024-03-15T12:16:49.323Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE3MTEzNjg1MzUsInJvbGUiOjEsInVzZXJfaWQiOjF9.U703AvR2oaqeJ76YYBOr51X3wAuVfyATdzzdj0ipmkw"
+                }
+            ],
             "params": [],
+            "reqType": "get",
             "tests": []
         },
         {
-            "_id": "86f65c35-890b-407c-bb21-a47e87db17ee",
-            "colId": "7e433c28-73b1-48ef-9966-945240dd5997",
-            "containerId": "9be4c533-9349-4897-a068-819841ab23b0",
-            "name": "Sensores existentes",
-            "url": "localhost:8080/data/getAllSensors",
-            "method": "GET",
-            "sortNum": 15000,
-            "created": "2024-03-15T02:36:00.711Z",
-            "modified": "2024-03-15T02:36:15.999Z",
-            "headers": [],
-            "params": [],
-            "tests": []
-        },
-        {
-            "_id": "c5b8e726-324e-4dbb-abca-8907b88fd79a",
-            "colId": "7e433c28-73b1-48ef-9966-945240dd5997",
-            "containerId": "332f76dc-e464-4a63-8b43-a3cef5adc930",
+            "_id": "1dd9769a-3985-4476-ad3d-1c59f5459e6e",
+            "colId": "ba8d5098-edd1-4e0c-afd4-9bc2f1c22215",
+            "containerId": "e6ea504d-b324-4795-88d1-6eb0ddf1c3a6",
             "name": "Login",
             "url": "localhost:8080/auth/login",
             "method": "POST",
-            "sortNum": 20000,
-            "created": "2024-03-15T02:31:18.843Z",
-            "modified": "2024-03-15T02:33:31.205Z",
+            "sortNum": 15000,
+            "created": "2024-03-15T12:08:10.493Z",
+            "modified": "2024-03-15T12:08:10.493Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
                 "raw": "{\n  \"email\": \"meu@email.com\",\n  \"password\": \"minhasenha\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "5cc254ff-7d0f-4e1e-8832-ceb2fa3109cc",
+            "colId": "ba8d5098-edd1-4e0c-afd4-9bc2f1c22215",
+            "containerId": "f9752eb3-58f3-431e-b7fe-f1f5fced001e",
+            "name": "Sensores existentes",
+            "url": "localhost:8080/data/getAllSensors",
+            "method": "GET",
+            "sortNum": 15000,
+            "created": "2024-03-15T12:08:10.495Z",
+            "modified": "2024-03-15T12:18:24.762Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "eyJhbGcOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE3MTEzNjg1MzUsInJvbGUiOjEsInVzZXJfaWQiOjF9.U703AvR2oaqeJ76YYBOr51X3wAuVfyATdzzdj0ipmkw"
+                }
+            ],
+            "params": [],
+            "reqType": "get",
+            "tests": []
+        },
+        {
+            "_id": "25e203f7-5093-4702-8c68-71d5612c4798",
+            "colId": "ba8d5098-edd1-4e0c-afd4-9bc2f1c22215",
+            "containerId": "e6ea504d-b324-4795-88d1-6eb0ddf1c3a6",
+            "name": "Mudar role de algum usuário",
+            "url": "localhost:8080/auth/changeUserRole",
+            "method": "POST",
+            "sortNum": 25000,
+            "created": "2024-03-15T13:19:49.437Z",
+            "modified": "2024-03-15T13:20:48.044Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"meu@email.com\",\n  \"role\": 2\n}",
                 "form": []
             },
             "tests": []
