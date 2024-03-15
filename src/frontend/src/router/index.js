@@ -9,8 +9,8 @@ const router = createRouter({
     {
       path: '/', 
       name: 'home',
-      component: HomeView,
-      redirect: '/auth'
+      component: () => import('../views/ComumView.vue')
+
     },
     {
       path: '/auth', 
