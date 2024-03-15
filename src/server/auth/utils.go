@@ -22,7 +22,7 @@ func HashPassword(password string) string {
 	return string(bytes)
 }
 
-func GenerateToken(user_id uint) (string, error) {
+func GenerateToken(user_id uint, role uint) (string, error) {
 
 	token_lifespan, err := strconv.Atoi("240")
 
@@ -33,6 +33,7 @@ func GenerateToken(user_id uint) (string, error) {
 	claims := jwt.MapClaims{}
 	claims["authorized"] = true
 	claims["user_id"] = user_id
+	claims["role"] = role
 	claims["exp"] = time.Now().Add(time.Hour * time.Duration(token_lifespan)).Unix()
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
@@ -62,7 +63,7 @@ func LoginCheck(email string, password string, pg *gorm.DB) (string, error) {
 		fmt.Println("password matches")
 	}
 
-	token, err := GenerateToken(u.ID)
+	token, err := GenerateToken(u.ID, u.Role)
 
 	if err != nil {
 		fmt.Println("error generating token")

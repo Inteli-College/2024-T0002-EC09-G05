@@ -10,6 +10,7 @@ type User struct {
 	Name      string
 	Email     string
 	Password  string
+	Role 		uint `gorm:"default:1"`
 }
 
 type Sensor struct {
