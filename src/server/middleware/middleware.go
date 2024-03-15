@@ -1,22 +1,30 @@
 package middleware
 
 import (
+	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strings"
-	"fmt"
 )
 
 var SecretKey = []byte("teste")
 
 func TokenAuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		tokenString := c.GetHeader("Authorization")
+
+		tokenString, _ := c.Cookie("token")
+
 		if tokenString == "" {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Authorization header is required"})
-			c.Abort()
-			return
+
+			tokenString = c.GetHeader("Authorization")
+
+			if tokenString == "" {
+
+				c.JSON(http.StatusUnauthorized, gin.H{"error": "No auth token found in request"})
+				c.Abort()
+				return
+			}
 		}
 
 		bearerToken := strings.TrimPrefix(tokenString, "Bearer ")

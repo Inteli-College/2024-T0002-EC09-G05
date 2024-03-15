@@ -77,8 +77,13 @@ func Register(c *gin.Context, pg *gorm.DB) {
 		Name:     input.Name,
 	}
 
+	
 	u.SaveUser(pg, &u)
+	
+	token, _ := GenerateToken(u.ID, u.Role)
 
-	c.String(200, "Register")
+	c.SetCookie("token", token, 3600, "/", "localhost", false, true)
+
+	c.JSON(200, gin.H{"status": "ok", "token": token})
 
 }
