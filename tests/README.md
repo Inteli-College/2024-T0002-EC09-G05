@@ -6,7 +6,7 @@ Para rodar os testes na sua máquina, execute o script com:
 
 `cd src && ./run_tests.sh`
 
-!(commit)[img/tests.png]
+![commit](img/tests.png)
 
 ### Resultados esperados
 
@@ -16,4 +16,4 @@ Para rodar os testes na sua máquina, execute o script com:
 
 O script `run_tests.sh` é executado automaticamente pelo Github Actions do projeto. O símbolo de check ao lado de um commit evidência o resultado dos testes para aquele commit específico:
 
-!(commit)[img/commit.png]
+![tests](img/commit.png)
