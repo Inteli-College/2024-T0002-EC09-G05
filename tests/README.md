@@ -1,6 +1,8 @@
 # Testes
 
-O script `run_tests.sh` na pasta `src/` é responsável por executar todos os testes do projeto. Ele executa o sistema completo, além de um container Go responsável por executar os testes unitários e de integração.
+Todos os testes de integração e unitários do projeto são executados por um script Go localizado na pasta `src/tests`.
+
+O script `run_tests.sh` na pasta `src/` é responsável por executar todos os testes do projeto. Ele executa o sistema completo, além do container de testes mencionado.
 
 Para rodar os testes na sua máquina, execute o script com:
 
