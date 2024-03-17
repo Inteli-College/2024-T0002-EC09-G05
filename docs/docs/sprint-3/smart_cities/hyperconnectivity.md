@@ -1,5 +1,5 @@
 ---
-title: Hiperconectividade
+title: Cidades Inteligentes - Hiperconectividade
 sidebar_position: 2
 ---
 
