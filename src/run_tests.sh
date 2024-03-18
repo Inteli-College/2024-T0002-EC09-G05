@@ -3,13 +3,16 @@
 status=1
 
 echo "Iniciando execução do script de teste..."
-echo "subindo contêineres de teste..."
+echo "Criando containers de teste... Isso pode levar até 5 minutos..."
 echo
-docker compose -f docker-compose-test.yaml up --build -d > /dev/null
+docker compose -f docker-compose-test.yaml  up --build -d --quiet-pull  >> /dev/null
 echo
-i=1
+i=0
 while [ $i -le 10 ]; do
+    i=$((i+1))
+    echo
     echo "Checkando existência do container de testes... ($i de 10)"
+    echo 
     
     if docker container inspect -f '{{.State.Running}}' tests; then
         echo "Rodando testes... aguarde..."
@@ -28,11 +31,12 @@ while [ $i -le 10 ]; do
     
     if [ $i -eq 10 ]; then
         echo "Tentativas de execução do script de teste falharam. Verifique os contêineres e o ambiente."
+        break
     fi
 done
 
 
-echo "Limpando contêineres..."
+echo "Limpando containers..."
 echo
 docker compose -f docker-compose-test.yaml down
 

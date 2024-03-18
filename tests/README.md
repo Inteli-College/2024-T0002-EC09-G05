@@ -1,72 +1,21 @@
-# Testes e Resultados
+# Testes
 
-Nessa seção se encontram os testes produzidos para validar nossa implementação inicial do projeto, garantindo o bom funcionamento do sistema
+Todos os testes de integração e unitários do projeto são executados por um script Go localizado na pasta `src/tests`.
 
-## Setup inicial do ambiente de testes
+O script `run_tests.sh` na pasta `src/` é responsável por executar todos os testes do projeto. Ele executa o sistema completo, além do container de testes mencionado.
 
-Nessa primeira versão do sistema foi utilizado python, e para reproduzir os testes nesse ambiente é necessário algumas configurações
+Para rodar os testes na sua máquina, execute o script com:
 
-A primeira delas, é recomendavel o uso de virtual environment. Para isso, rode:
-```
-python3 virtualenv venv
-```
+`cd src && ./run_tests.sh`
 
-Para ativar o venv, use:
-```
-source venv/bin/activate
-```
+![commit](img/tests.png)
 
-Agora dentro da pasta **src**, instale o pacote do projeto:
-```
-pip install -e .
-```
+### Resultados esperados
 
-E por ultimo instale as dependencias necessárias para o teste:
-```
-pip install -e ".[test]"
-```
+É esperado que todos os testes passem. Verifique código de saída do script. Qualquer código diferente de 0 indica falha nos testes.
 
-### Teste de publicação de mensageria via MQTT
+### CI/CD
 
-**Objetivo**: Verificar a publicação de mensagens no Broker publico HiveMQ a partir de um sensor simulado
+O script `run_tests.sh` é executado automaticamente pelo Github Actions do projeto. O símbolo de check ao lado de um commit evidência o resultado dos testes para aquele commit específico:
 
-**Estrutura do teste**: 
-Primeiro, no arquivo 'test_pub.py' dentro da pasta 'tests', configuramos um cliente MQTT (Paho MQTT, usado no nosso caso), instanciado a partir da classe de um Sensor 'Genérico'. A partir dele publicamos os dados em um Broker, para isso usamos o Broker publico da HiveMQ
-
-Para rodar, dentro da pasta 'tests' execute o seguinte código:
-```
-pytest test_pub.py
-```
-
-**Resultado esperado**
-![Teste de publicação MQTT](./media/pytestPub.png)
-
-
-### Teste de geração e envio de dados simulado
-
-**Objetivo**: Verificar se o código gerador de dados simulaos funciona e se ele envia para a instancia que o chamar, como qualquer instancia do nosso Sensor
-
-**Estrutura do teste**: 
-Primeiro, no arquivo 'test_get_data.py' dentro da pasta 'tests', instanciamos um novo objeto da classe 'Sensor', de nome 'Radx-300', com valor minimo de 200 e valor maximo de 1100 (nome e valores inspirados nesse [sensor de radiação solar](https://sigmasensors.com.br/produtos/sensor-de-radiacao-solar-sem-fio-hobonet-rxw-lib-900))
-A cada
-
-Para rodar, dentro da pasta 'tests' execute o seguinte código:
-```
-pytest test_get_data.py
-```
-
-**Resultado esperado**
-
-![Teste de geração de dados](./media/pytestGetData.png)
-
-### Rodando todos de uma vez
-
-Também é possivel rodar todos os testes de uma unica vez, para isso, dentro da pasta 'src', execeute o comando:
-
-```
-pytest
-```
-
-Resultado na linha de comando:
-
-![Teste geral](./media/pytestFull.png)
+![tests](img/commit.png)

@@ -5,6 +5,7 @@ version: '3'
 # PARA RODAR OS TESTES, NÃO RODE ESSE COMPOSE POR SI (com "docker-compose up")
 # RODE O SCRIPT "run_tests.sh" NA RAIZ DO PROJETO
 # -------------------------------------------------------------------------
+# ATENÇÃO ATENÇÃO ATENÇÃO ATENÇÃO
 
 services:
 
@@ -39,11 +40,11 @@ services:
       timeout: 2s
       retries: 20
 
-  server:
-    container_name: server
-    build: ./server
+  consumer:
+    container_name: consumer
+    build: ./consumer
     volumes:
-      - ./server:/app
+      - ./consumer:/app
     ports:
     - 8080:8080
     healthcheck:
@@ -73,6 +74,22 @@ services:
       influxdb:
         condition: service_healthy
 
+  server:
+    container_name: server
+    build: ./server
+    volumes:
+      - ./server:/app
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep -f air || exit 1"]
+      interval: 5s
+      timeout: 2s
+      retries: 10
+    depends_on:
+      influxdb:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+
 
   tests:
     container_name: tests
@@ -86,3 +103,23 @@ services:
         condition: service_healthy
       simulator:
         condition: service_healthy
+      consumer:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    container_name: postgres
+    image: postgres:16.2-alpine
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d postgres -U username"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+    restart: always
