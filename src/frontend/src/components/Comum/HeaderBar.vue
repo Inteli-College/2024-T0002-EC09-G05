@@ -27,7 +27,7 @@
             <BellIcon class="h-6 w-6" aria-hidden="true" />
           </button>
 
-          <a href="/auth"  class="mx-4 rounded-full bg-slate-700 px-10 text-gray-50 py-2">Sigin</a href="/auth">
+          <a href="/auth"  class="mx-4 hover:bg-slate-600 rounded-full bg-slate-700 px-10 text-gray-50 py-2">Sigin</a href="/auth">
         </div>
       </div>
     </div>

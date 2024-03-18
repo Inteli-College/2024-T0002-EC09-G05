@@ -24,6 +24,7 @@
                     name="email"
                     type="email"
                     autocomplete="email"
+                    v-model="email"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -45,6 +46,7 @@
                     id="password"
                     name="password"
                     type="password"
+                    v-model="password"
                     autocomplete="current-password"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
@@ -74,19 +76,46 @@
   </div>
 </template>
 <script>
+import Cookies from 'js-cookie';
 export default {
   data() {
     return {
-      username: 'Username',
-      password: 'blabla'
+      email: '',
+      password: ''
     }
   },
   methods: {
-    login() {
-      this.$toast.success(`Login successful! Welcome, ${this.username}`)
+   async login() {
+      try {
+      const url = 'http://172.27.112.1:3000/auth/login';
+      const data = {
+        username: this.email,
+        password: this.password
+      };
 
-      window.user = this.username
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        this.$toast.error(`Usuário ou senha estão incorretos.`)
+        throw new Error('Erro ao fazer requisição para o servidor.');
+      }
+
+      const responseData = await response.json();
+      this.$toast.success(`Login successful! Welcome, ${this.email}`)
+      window.user = this.email
+      Cookies.set('authToken', responseData.token);
       this.$router.push('/default')
+
+    } catch (error) {
+      console.error('Ocorreu um erro:', error);
+      // Aqui você pode exibir uma mensagem de erro para o usuário, informando que houve um problema durante a autenticação
+    }
     }
   }
 }
