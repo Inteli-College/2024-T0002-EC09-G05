@@ -76,7 +76,9 @@
   </div>
 </template>
 <script>
-import Cookies from 'js-cookie';
+
+import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -85,37 +87,30 @@ export default {
     }
   },
   methods: {
-   async login() {
+    async login() {
       try {
-      const url = 'http://172.27.112.1:3000/auth/login';
-      const data = {
-        username: this.email,
-        password: this.password
-      };
+        const url = '/auth/login';
 
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
 
-      if (!response.ok) {
-        this.$toast.error(`Usuário ou senha estão incorretos.`)
-        throw new Error('Erro ao fazer requisição para o servidor.');
+        const response = await axios.post( url,  {
+          email: String(this.email),
+          password: this.password
+        });
+
+        console.log(response.data);
+
+        if (!response.data) {
+          this.$toast.error(`Usuário ou senha estão incorretos.`);
+          throw new Error('Erro ao fazer requisição para o servidor.');
+        }
+
+        this.$toast.success(`Login successful! Welcome, ${this.email}`);
+        window.user = this.email;
+        this.$router.push('/default');
+      } catch (error) {
+        console.error('Ocorreu um erro:', error);
+        // Aqui você pode exibir uma mensagem de erro para o usuário, informando que houve um problema durante a autenticação
       }
-
-      const responseData = await response.json();
-      this.$toast.success(`Login successful! Welcome, ${this.email}`)
-      window.user = this.email
-      Cookies.set('authToken', responseData.token);
-      this.$router.push('/default')
-
-    } catch (error) {
-      console.error('Ocorreu um erro:', error);
-      // Aqui você pode exibir uma mensagem de erro para o usuário, informando que houve um problema durante a autenticação
-    }
     }
   }
 }

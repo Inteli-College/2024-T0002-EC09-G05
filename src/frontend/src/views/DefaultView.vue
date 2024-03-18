@@ -3,10 +3,8 @@
 import HeaderBar from '../components/HeaderBar.vue';
 import DashboardContainer from '../components/DashboardContainer.vue';
 
-//http://10.254.17.50:3000/app
-
 function apiData(){
-  return false
+  return true
 }
 
 </script>
