@@ -3,12 +3,13 @@ package auth
 import (
 	"fmt"
 	"g5/server/db"
-	jwt "github.com/dgrijalva/jwt-go"
-	"golang.org/x/crypto/bcrypt"
-	"gorm.io/gorm"
 	"os"
 	"strconv"
 	"time"
+
+	jwt "github.com/dgrijalva/jwt-go"
+	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
 
 func HashPassword(password string) string {
@@ -37,11 +38,11 @@ func GenerateToken(user_id uint, role uint) (string, error) {
 	claims["exp"] = time.Now().Add(time.Hour * time.Duration(token_lifespan)).Unix()
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
-	return token.SignedString([]byte("teste"))
+	return token.SignedString([]byte("PRODam$%#Ah"))
 
 }
 
-func LoginCheck(email string, password string, pg *gorm.DB) (string, error) {
+func LoginCheck(email string, password string, pg *gorm.DB) (string, string, int, error) {
 
 	var err error
 
@@ -51,14 +52,13 @@ func LoginCheck(email string, password string, pg *gorm.DB) (string, error) {
 
 	if err != nil {
 		fmt.Println("email not found in database")
-		return "", err
+		return "", "Erro", 0, err
 	}
 
-	err = bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
-
-	if err != nil {
+	//err = bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
+	if u.Password != password {
 		fmt.Println("password does not match (ERROR in bcrypt)")
-		return "", err
+		return "", "", 0, bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
 	} else {
 		fmt.Println("password matches")
 	}
@@ -68,9 +68,9 @@ func LoginCheck(email string, password string, pg *gorm.DB) (string, error) {
 	if err != nil {
 		fmt.Println("error generating token")
 		fmt.Println(err)
-		return "", err
+		return "", "", 0, err
 	}
 
-	return token, nil
+	return token, u.Name, int(u.ID), nil
 
 }

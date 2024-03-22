@@ -2,10 +2,11 @@ package middleware
 
 import (
 	"fmt"
-	"github.com/dgrijalva/jwt-go"
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"strings"
+
+	"github.com/dgrijalva/jwt-go"
+	"github.com/gin-gonic/gin"
 )
 
 var SecretKey = []byte("teste")
@@ -27,7 +28,7 @@ func TokenAuthMiddleware() gin.HandlerFunc {
 			}
 		}
 
-		bearerToken := strings.TrimPrefix(tokenString, "Bearer ")
+		bearerToken := strings.TrimPrefix(tokenString, "Bearer")
 
 		token, err := jwt.Parse(bearerToken, func(token *jwt.Token) (interface{}, error) {
 			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
