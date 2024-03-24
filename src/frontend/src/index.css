@@ -76,8 +76,11 @@
   width: 275px;
   top: 75px;
   left: 10px;
+  background-color: aliceblue;
   transition: width 0.5s;
   transition: left 0.5s;
+
+  
 
 
 }
@@ -94,6 +97,7 @@
   .SideBar{
     width: 275px;
     left: 10px;
+
   }
 }
 
@@ -101,5 +105,6 @@
   .SideBar{
     width: 15.9%;
     left: 0px;
+
   }
 }
