@@ -18,7 +18,6 @@
             
             const response = await axios.post( url,  {
             id: window.user,
-            token: "token",
             });
 
             console.log(response.data.elements)
@@ -39,6 +38,7 @@
             raw_elements[0],
             raw_elements[1],
             raw_elements[2],
+            raw_elements[3],
        ]
     }
 
@@ -61,7 +61,7 @@
                     <div :class="`${element_.Value} flex justify-center  items-center min-h-52 h-auto bg-slate-700 text-center`">
                         <div class="flex flex-col w-auto">
                             <h1 class="m-3">{{element_.Index}}</h1>
-                            <!-- <MainChart v-if="element_.Name == 'MainChart'" /> -->
+                            <MainChart v-if="element_.Name == 'MainChart'" />
                             <GrapchA v-if="element_.Name == 'GrapchA'" />
                             <GrapchB v-if="element_.Name == 'GrapchB'" />
                             <GrapchC v-if="element_.Name == 'GrapchC'" />

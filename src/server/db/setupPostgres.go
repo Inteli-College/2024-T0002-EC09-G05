@@ -14,6 +14,8 @@ type User struct {
 	Role             uint `gorm:"default:1"`
 	DirectorateRefer int
 	Directorate      Directorate `gorm:"foreignKey:DirectorateRefer"`
+	LayoutRefer      int
+	Layout           Layout `gorm:"foreignKey:LayoutRefer"`
 
 	// use LayoutRefer as foreign key
 }
@@ -29,16 +31,21 @@ type Elements struct {
 	ID         int `gorm:"primaryKey;unique;autoIncrement;"`
 	Name       string
 	PropsRefer int
-	Index      int   `gorm:"unique;autoIncrement;"`
 	Props      Props `gorm:"foreignKey:PropsRefer"`
-	UserRefer  int
-	User       User `gorm:"foreignKey:UserRefer"`
 }
 
 type Props struct {
 	gorm.Model
 	ID    int `gorm:"primaryKey;unique;autoIncrement;"`
 	Value string
+}
+
+type Layout struct {
+	gorm.Model
+	ID            int `gorm:"primaryKey;"`
+	ElementsRefer int
+	Elements      Elements `gorm:"foreignKey:ElementsRefer"`
+	Index         int
 }
 
 type Sensor struct {
@@ -62,6 +69,7 @@ func SetupPostgres() *gorm.DB {
 	db.AutoMigrate(&Sensor{})
 	db.AutoMigrate(&Props{})
 	db.AutoMigrate(&Elements{})
+	db.AutoMigrate(&Layout{})
 	db.AutoMigrate(&Directorate{})
 
 	return db
