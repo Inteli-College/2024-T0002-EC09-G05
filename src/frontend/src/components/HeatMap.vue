@@ -10,16 +10,23 @@ const heatmapData = [
   { lat: -23.56041, lng: -46.7252 },
   { location: { lat: -23.55802, lng:  -46.72048 }, weight: 3},
   { location: { lat: -23.57284, lng:  -46.70642 }, weight: 1.8},
+  { location: { lat: -23.55901, lng:  -46.72010 }, weight: 3},
+  { location: { lat: -23.55950, lng:  -46.71900 }, weight: 2},
+  { location: { lat: -23.55998, lng:  -46.71850 }, weight: 3},
   { location: { lat: -23.58758, lng:  -46.65567 }, weight: 2},
 
 ]
+
+const googleApi = import.meta.env.VITE_GOOGLE_API
+
 </script>
 
-<template>
+<template >
+  {{ googleApi }}
   <GoogleMap
-    api-key="AIzaSyAm7xZj1d0fQRv0sYl_Urq4wggecZPaLlE"
+    :api-key="googleApi"
     :libraries="['visualization']"
-    style="width: 100%; height: 500px"
+    style="width: 100%; height: 600px; width: 100%"
     :center="inteli"
     :zoom="14"
     
