@@ -22,7 +22,6 @@ const googleApi = import.meta.env.VITE_GOOGLE_API
 </script>
 
 <template >
-  {{ googleApi }}
   <GoogleMap
     :api-key="googleApi"
     :libraries="['visualization']"
