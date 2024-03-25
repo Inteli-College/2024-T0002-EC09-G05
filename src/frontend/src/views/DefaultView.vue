@@ -3,7 +3,7 @@
 import HeaderBar from '../components/HeaderBar.vue';
 
 import HeaderBarComun from '../components/Comum/HeaderBar.vue'
-import DashboardContainerComun from '../components/DashboardContainer.vue'
+import DashboardContainerComum from '../components/Comum/DashboardContainer.vue'
 
 import { useCookies } from 'vue3-cookies'
 
@@ -36,7 +36,7 @@ function apiData(){
   </div>
   <div class="commun"  v-else>
     <HeaderBarComun />
-    <DashboardContainerComun />
+    <DashboardContainerComum />
   </div>
 </template>
 

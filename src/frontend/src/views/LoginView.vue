@@ -99,7 +99,7 @@ export default {
         });
 
         
-        useCookies().cookies.set('authToken', response.data.token)
+        useCookies().cookies.set('authToken', response.data.id)
         if (!response.data) {
           throw new Error('Erro ao fazer requisição para o servidor.');
         }

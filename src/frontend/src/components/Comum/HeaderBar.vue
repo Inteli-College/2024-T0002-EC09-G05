@@ -1,5 +1,5 @@
 <template>
-  <Disclosure as="nav" class="bg-slate-100">
+  <Disclosure as="nav" class="bg-slate-100 border-botton">
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
       <div class="relative flex h-16 items-center justify-between">
         <a href="/" class="flex flex-shrink-0 items-center">

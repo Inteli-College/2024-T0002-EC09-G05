@@ -71,6 +71,11 @@
   background-color: rgba(15, 3, 43, 0.356);
 }
 
+.soft-shadow{
+  border-radius: 10px;
+  box-shadow: 0px 0px 25px 0px rgba(24, 24, 24, 0.15);
+  
+}
 
 .SideBar{
   width: 275px;
@@ -80,17 +85,30 @@
   transition: width 0.5s;
   transition: left 0.5s;
 
-  
+}
 
+.bg-root-color{
+  background-color: rgb(112, 112, 112);
+}
 
+.ui-color{
+  background-color: #e5faf6;
 }
 
 .sideMenu {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
+  
+}
+
+.border-top{
   border-top: 1px solid rgb(71, 71, 71);
 
+}
+
+.border-botton{
+  border-bottom: 1px solid rgb(71, 71, 71);
 }
 
 @media (min-width: 640px){
