@@ -17,7 +17,7 @@ const heatmapData = [
 
 <template>
   <GoogleMap
-    api-key="AIzaSyAm7xZj1d0fQRv0sYl_Urq4wggecZPaLlE"
+    api-key="API_KEY"
     :libraries="['visualization']"
     style="width: 100%; height: 500px"
     :center="inteli"
