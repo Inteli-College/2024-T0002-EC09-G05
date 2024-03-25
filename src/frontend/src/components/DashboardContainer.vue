@@ -1,6 +1,7 @@
 <script setup>
 import SideBar from './SideBar.vue'
 import MainChart from './MainChart.vue';
+import HeatMap from './HeatMap.vue'
 
 </script>
 
@@ -14,6 +15,9 @@ import MainChart from './MainChart.vue';
             <div class="flex flex-col gap-10 h-full max-w-full m-10 items-center align-items: flex-start">
                 <div style="width: 100%; max-height: 300px; height: 300px;">
                     <MainChart />
+                </div>
+                <div style="width: 100%; max-height: 300px; height: 300px;">
+                    <HeatMap />
                 </div>
 
             </div>
