@@ -55,8 +55,8 @@ func LoginCheck(email string, password string, pg *gorm.DB) (string, string, int
 		return "", "Erro", 0, err
 	}
 
-	//err = bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
-	if u.Password != password {
+	err = bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
+	if err != nil {
 		fmt.Println("password does not match (ERROR in bcrypt)")
 		return "", "", 0, bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
 	} else {

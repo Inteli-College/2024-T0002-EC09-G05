@@ -11,8 +11,8 @@ type User struct {
 	Name             string
 	Email            string
 	Password         string
-	Role             uint `gorm:"default:1"`
-	DirectorateRefer int
+	Role             uint        `gorm:"default:1"`
+	DirectorateRefer int         `gorm:"default:1"`
 	Directorate      Directorate `gorm:"foreignKey:DirectorateRefer"`
 }
 

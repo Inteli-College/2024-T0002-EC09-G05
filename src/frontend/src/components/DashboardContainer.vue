@@ -25,25 +25,20 @@
             });
 
             console.log(response.data.elements)
-            if  (response.data != null){
+            if  (response.data.elements != null){
                 return response.data.elements}
 
         } catch (error) {
             console.error('Ocorreu um erro:', error);
             
         }
-        return ["Tetse"]
+        return [{"Name": "MainChart","Index": 1,"Value": "w-96"}]
     } 
 
 
    async function format_data() {
        var  raw_elements = await get_elements()
-       elements.value = [
-            raw_elements[0],
-            raw_elements[1],
-            raw_elements[2],
-            raw_elements[3],
-       ]
+       elements.value = raw_elements
     }
 
     onMounted(() => {
@@ -62,7 +57,7 @@
             
             <draggable v-model="elements" tag="div" class="flex flex-wrap gap-10 h-full max-w-full m-10 items-center align-items: flex-start" :animation="300">
                 <template #item="{ element: element_ }">
-                    <div :class="`${element_.Value} flex justify-center  items-center min-h-52 h-auto bg-slate-50 soft-shadow text-center`">
+                    <div :class="`${element_.Value} flex justify-center cursor-grab  items-center min-h-52 h-auto bg-slate-50 soft-shadow text-center`">
                         <div class="flex flex-col w-auto">
                             <h1 class="m-3">{{element_.Index}}</h1>
                             <MainChart v-if="element_.Name == 'MainChart'" />

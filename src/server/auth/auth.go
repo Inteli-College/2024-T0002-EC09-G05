@@ -10,9 +10,10 @@ import (
 )
 
 type RegisterInput struct {
-	Email    string `json:"email" validate:"required,email"`
-	Password string `json:"password" validate:"required"`
-	Name     string `json:"name" validate:"required"`
+	Email       string `json:"email" validate:"required,email"`
+	Password    string `json:"password" validate:"required"`
+	Name        string `json:"name" validate:"required"`
+	Directorate int    `json:"directorate" validate:"required"`
 }
 
 type LoginInput struct {
@@ -73,9 +74,10 @@ func Register(c *gin.Context, pg *gorm.DB) {
 	hashedPassword := HashPassword(input.Password)
 
 	u := db.User{
-		Email:    input.Email,
-		Password: hashedPassword,
-		Name:     input.Name,
+		Email:            input.Email,
+		Password:         hashedPassword,
+		Name:             input.Name,
+		DirectorateRefer: input.Directorate,
 	}
 
 	u.SaveUser(pg, &u)
