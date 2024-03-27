@@ -1,5 +1,5 @@
 <script setup>
-import { GoogleMap, HeatmapLayer } from 'vue3-google-map'
+import { GoogleMap, HeatmapLayer, CustomControl } from 'vue3-google-map'
 
 const inteli = { lat: -23.555626840909746, lng: -46.73381383445283 }
 
@@ -22,20 +22,71 @@ const googleApi = import.meta.env.VITE_GOOGLE_API
 </script>
 
 <template >
-  <GoogleMap
-    :api-key="googleApi"
-    :libraries="['visualization']"
-    style="width: 100%; height: 600px; width: 100%"
-    :center="inteli"
-    :zoom="14"
-    
-    :disableDefaultUi="true"
-  >
-    <HeatmapLayer :options="{ 
-      data: heatmapData,
-      radius: 75,
-      dissipating: true, 
-      opacity: 0.4
-       }" />
-  </GoogleMap>
+  <div class="relative">
+    <div class="static">
+      <GoogleMap
+        :api-key="googleApi"
+        :libraries="['visualization']"
+        style="width: 100%; height: 600px; width: 100%"
+        :center="inteli"
+        :zoom="14"
+        
+        :disableDefaultUi="true"
+      >
+        <HeatmapLayer :options="{ 
+          data: heatmapData,
+          radius: 75,
+          dissipating: true, 
+          opacity: 0.4
+          }" />
+
+        
+        <!-- <CustomControl position="BLOCK_END_INLINE_CENTER">
+          <button class="custom-btn" @click="sayHi">👋</button>
+        </CustomControl>
+        <CustomControl position="BLOCK_END_INLINE_CENTER">
+          <button class="custom-btn" @click="sayHi">👋</button>
+        </CustomControl> -->
+      
+      </GoogleMap>  
+    </div>
+    <!-- custom controls -->
+    <div class="absolute">
+      <div></div>
+    </div>
+  </div>
+  
 </template>
+
+<style scoped>
+.custom-btn {
+  box-sizing: border-box;
+  background: rgba(123, 123, 123, 0.8);
+  height: 125px;
+  width: 200px;
+  margin: 0px 0px 1.5rem 0px;
+  /* padding: 0px; */
+  font-size: 1.25rem;
+  appearance: none;
+
+  user-select: none;
+  overflow: hidden;
+
+  font-family: Roboto, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: #fff;
+  background-color: #79797987;
+  padding: 15px 30px;
+  border: none;
+  box-shadow: rgb(0, 0, 0) 0px 5px 25px -5px;
+  border-radius: 8px 8px 0px 0px;
+  /* transition : 738ms; */
+  /* transform: translateY(0); */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  text-transform: lowercase;
+}
+</style>
