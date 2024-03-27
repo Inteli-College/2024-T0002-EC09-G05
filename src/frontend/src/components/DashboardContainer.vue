@@ -17,7 +17,7 @@ import HeatMap from './HeatMap.vue'
                     <HeatMap />
                 </div>
                 <div style="width: 100%; max-height: 300px; height: 300px;">
-                    <!-- <MainChart /> -->
+                    <MainChart />
                 </div>
             </div>
         </div>
