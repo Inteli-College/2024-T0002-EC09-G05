@@ -13,7 +13,7 @@ Chart.register(...registerables);
 const chartRef = ref(null);
 
 async function fetchData() {
-  const url = 'http://localhost:8080/data/getDataByRelativeTime';
+  const url = '/api/data/getDataByRelativeTime';
   const requestBody = {
     start_time: 60, // Puxa os dados da última hora
     aggregator: 30, // Média dos dados a cada 30 segundos
