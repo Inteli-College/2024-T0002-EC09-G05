@@ -79,7 +79,19 @@ func Register(c *gin.Context, pg *gorm.DB) {
 	}
 
 	user, _ := u.SaveUser(pg, &u)
-	println(user)
+	layout := [2]db.Layout{
+		{
+			Index:         1,
+			UserRefer:     int(user.ID),
+			ElementsRefer: 1,
+		},
+		{
+			Index:         2,
+			UserRefer:     int(user.ID),
+			ElementsRefer: 2,
+		},
+	}
+	pg.Create(&layout)
 
 	token, _ := GenerateToken(uint(u.ID), u.Role)
 

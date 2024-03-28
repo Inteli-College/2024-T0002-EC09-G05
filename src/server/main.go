@@ -15,7 +15,11 @@ func main() {
 
 	influx := db.CreateinfluxConnection()
 
-	pg := db.SetupPostgres()
+	pg, err := db.SetupPostgres()
+
+	if err != nil {
+		panic("Erro no postgress")
+	}
 
 	routes.SetupDataRoutes(r, influx, pg)
 	routes.SetupAuthRoutes(r, pg)

@@ -4,7 +4,8 @@
     import MainChart from './MainChart.vue';
     import GrapchA from './GrapchA.vue';
     import GrapchB from './GrapchB.vue';
-    import GrapchC from './GrapchC.vue';
+    
+    import HeatMap from './HeatMap.vue';
     
     import axios from 'axios';
     import { useCookies } from 'vue3-cookies'
@@ -58,13 +59,13 @@
             <draggable v-model="elements" tag="div" class="flex flex-wrap gap-10 h-full max-w-full m-10 items-center align-items: flex-start" :animation="300">
                 <template #item="{ element: element_ }">
                     <div :class="`${element_.Value} flex justify-center cursor-grab  items-center min-h-52 h-auto bg-slate-50 soft-shadow text-center`">
-                        <div class="flex flex-col w-auto">
-                            <h1 class="m-3">{{element_.Index}}</h1>
+
+                            
                             <MainChart v-if="element_.Name == 'MainChart'" />
                             <GrapchA v-if="element_.Name == 'GrapchA'" />
                             <GrapchB v-if="element_.Name == 'GrapchB'" />
-                            <GrapchC v-if="element_.Name == 'GrapchC'" />
-                        </div>
+                            <HeatMap v-if="element_.Name == 'HeatMap'" />
+
                     </div>
                 </template>
             </draggable> 
