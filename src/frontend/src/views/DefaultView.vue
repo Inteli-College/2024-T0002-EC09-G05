@@ -40,27 +40,3 @@ function apiData(){
   </div>
 </template>
 
-
-
-
-<!-- {
-  "elements": [
-    {
-      "Name": "Grafico A",
-      "Index": 1,
-      "Value": "50vw"
-    },
-    {
-      "Name": "Grafico C",
-      "Index": 3,
-      "Value": "25vw"
-    },
-    {
-      "Name": "Grafico B",
-      "Index": 2,
-      "Value": "70vw"
-    }
-  ],
-  "id": 1,
-  "status": "ok"
-} -->

@@ -1,6 +1,8 @@
 package db
 
 import (
+	"fmt"
+
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -54,21 +56,67 @@ type Sensor struct {
 	CoordY     float32
 }
 
-func SetupPostgres() *gorm.DB {
+func SetupPostgres() (*gorm.DB, error) {
 
 	dsn := "host=postgres user=username password=password dbname=postgres port=5432 sslmode=disable TimeZone=America/Sao_Paulo"
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		panic("failed to connect database")
+		return nil, err
 	}
 
-	db.AutoMigrate(&Sensor{})
-	db.AutoMigrate(&Props{})
-	db.AutoMigrate(&Elements{})
-	db.AutoMigrate(&Layout{})
-	db.AutoMigrate(&Directorate{})
-	db.AutoMigrate(&User{})
+	err = db.AutoMigrate(&Sensor{})
+	if err != nil {
+		return nil, err
+	}
+	err = db.AutoMigrate(&Props{})
+	if err != nil {
+		return nil, err
+	}
+	err = db.AutoMigrate(&Elements{})
+	if err != nil {
+		return nil, err
+	}
+	err = db.AutoMigrate(&Layout{})
+	if err != nil {
+		return nil, err
+	}
+	err = db.AutoMigrate(&Directorate{})
+	if err != nil {
+		return nil, err
+	}
+	err = db.AutoMigrate(&User{})
+	if err != nil {
+		return nil, err
+	}
 
-	return db
+	directorate := Directorate{
+		ID:          1,
+		Directorate: "Default",
+	}
+	db.Create(&directorate)
+
+	props := Props{
+		ID:    1,
+		Value: "w-full",
+	}
+	db.Create(&props)
+
+	elements := [2]Elements{
+		{
+			ID:         1,
+			Name:       "MainChart",
+			PropsRefer: 1,
+		},
+		{
+			ID:         2,
+			Name:       "HeatMap",
+			PropsRefer: 1,
+		},
+	}
+	db.Create(&elements)
+
+	fmt.Println("Inicialização do banco de dados concluída")
+
+	return db, nil
 }
