@@ -2,6 +2,7 @@ package auth
 
 import (
 	"g5/server/db"
+
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"gorm.io/gorm"
@@ -9,13 +10,14 @@ import (
 )
 
 type RegisterInput struct {
-	Email    string `json:"email" validate:"required,email"`
-	Password string `json:"password" validate:"required"`
-	Name     string `json:"name" validate:"required"`
+	Email       string `json:"email" validate:"required,email"`
+	Password    string `json:"password" validate:"required"`
+	Name        string `json:"name" validate:"required"`
+	Directorate int    `json:"directorate" validate:"required"`
 }
 
 type LoginInput struct {
-	Email    string `json:"email" validate:"required,email"`
+	Email    string `json:"email" validate:"required"`
 	Password string `json:"password" validate:"required"`
 }
 
@@ -35,14 +37,14 @@ func Login(c *gin.Context, pg *gorm.DB) {
 		return
 	}
 
-	token, err := LoginCheck(input.Email, input.Password, pg)
+	token, name, id, err := LoginCheck(input.Email, input.Password, pg)
 
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 	c.SetCookie("token", token, 3600, "/", "localhost", false, true)
-	c.JSON(200, gin.H{"token": token})
+	c.JSON(200, gin.H{"token": token, "name": name, "id": id})
 
 }
 
@@ -72,15 +74,15 @@ func Register(c *gin.Context, pg *gorm.DB) {
 	hashedPassword := HashPassword(input.Password)
 
 	u := db.User{
-		Email:    input.Email,
-		Password: hashedPassword,
-		Name:     input.Name,
+		Email:            input.Email,
+		Password:         hashedPassword,
+		Name:             input.Name,
+		DirectorateRefer: input.Directorate,
 	}
 
-	
 	u.SaveUser(pg, &u)
-	
-	token, _ := GenerateToken(u.ID, u.Role)
+
+	token, _ := GenerateToken(uint(u.ID), u.Role)
 
 	c.SetCookie("token", token, 3600, "/", "localhost", false, true)
 
@@ -96,7 +98,7 @@ func ChangeRole(c *gin.Context, pg *gorm.DB) {
 		c.JSON(400, gin.H{"error": "You don't have the necessary role to access this resource"})
 		return
 	}
-	
+
 	var validate = validator.New()
 	var input struct {
 		Email string `json:"email" validate:"required,email"`

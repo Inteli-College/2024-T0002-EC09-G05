@@ -18,8 +18,8 @@ func main() {
 	pg := db.SetupPostgres()
 
 	routes.SetupDataRoutes(r, influx, pg)
-
 	routes.SetupAuthRoutes(r, pg)
+	routes.SetupPlatformRoutes(r, pg)
 
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:           []string{"http://localhost:5173"},

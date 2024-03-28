@@ -1,5 +1,5 @@
 <template>
-  <Disclosure as="nav" class="bg-slate-100">
+  <Disclosure as="nav" class="bg-slate-100   border-botton">
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
       <div class="relative flex h-16 items-center justify-between">
         <a href="/" class="flex flex-shrink-0 items-center">
@@ -72,7 +72,8 @@
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
                   <a
-                    href="/"
+                  href="/auth"
+                  @click="handler"
                     :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
                     >Sign out</a
                   >
@@ -90,4 +91,10 @@
 import { Disclosure, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { BellIcon } from '@heroicons/vue/24/outline'
 import SearchBar from '../components/SearchBar.vue'
+import { useCookies } from 'vue3-cookies'
+
+function handler(event) {
+  useCookies().cookies.remove("authToken")
+  
+}
 </script>

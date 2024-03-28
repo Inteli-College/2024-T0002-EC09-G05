@@ -99,7 +99,7 @@ func (s *Sensor) generateWaveData(currentPosition float32) float32 {
 		//fmt.Println("Wave")
 		s.waveSize -= 1
 		loss := float32(math.Cos(float64(time.Now().Unix())) * 2)
-		fmt.Printf("Valor do loss %.2f", loss)
+		//fmt.Printf("Valor do loss %.2f", loss)
 		value = s.currentPosition + loss
 		if s.waveSize <= 0 {
 			s.status = "transtion"
@@ -224,6 +224,6 @@ func main() {
 	go simulateSensor(sslCertificate, "Moema")
 	go simulateSensor(sslCertificate, "Vila Mariana")
 	go simulateSensor(sslCertificate, "Paulista")
-	
+
 	select {}
 }

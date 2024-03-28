@@ -78,6 +78,7 @@
 <script>
 
 import axios from 'axios';
+import { useCookies } from 'vue3-cookies'
 
 export default {
   data() {
@@ -89,25 +90,25 @@ export default {
   methods: {
     async login() {
       try {
-        const url = '/auth/login';
-
+        const url = '/api/auth/login';
+        
 
         const response = await axios.post( url,  {
           email: String(this.email),
           password: this.password
         });
 
-        console.log(response.data);
-
+        
+        useCookies().cookies.set('authToken', response.data.id)
         if (!response.data) {
-          this.$toast.error(`Usuário ou senha estão incorretos.`);
           throw new Error('Erro ao fazer requisição para o servidor.');
         }
 
-        this.$toast.success(`Login successful! Welcome, ${this.email}`);
-        window.user = this.email;
-        this.$router.push('/default');
+        this.$toast.success(`Login successful! Welcome, ${response.data.name}`);
+        window.user = response.data.id;
+        this.$router.push('/');
       } catch (error) {
+        this.$toast.error(`Usuário ou senha estão incorretos.`);
         console.error('Ocorreu um erro:', error);
         // Aqui você pode exibir uma mensagem de erro para o usuário, informando que houve um problema durante a autenticação
       }
@@ -115,3 +116,4 @@ export default {
   }
 }
 </script>
+

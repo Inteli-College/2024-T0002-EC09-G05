@@ -59,7 +59,7 @@
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"Meu Nome\",\n  \"email\":\"meu@email.com\",\n  \"password\": \"minhasenha\"\n}",
+                "raw": "{\n  \"name\": \"Meu Nome\",\n  \"email\":\"meuTimao@email.com\",\n  \"password\": \"minhasenha\"\n}",
                 "form": []
             },
             "tests": []
@@ -98,7 +98,7 @@
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"email\": \"meu@email.com\",\n  \"password\": \"minhasenha\"\n}",
+                "raw": "{\n  \"email\": \"meuTimao@email.com\",\n  \"password\": \"minhasenha\"\n}",
                 "form": []
             },
             "tests": []
