@@ -2,11 +2,11 @@ package routes
 
 import (
 	"g5/server/db"
-	"g5/server/middleware"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/influxdata/influxdb-client-go/v2/api"
 	"gorm.io/gorm"
-	"net/http"
 )
 
 type GetDataByRelativeTimeDTO struct {
@@ -21,7 +21,7 @@ func SetupDataRoutes(r *gin.Engine, influx api.QueryAPI, pg *gorm.DB) *gin.Engin
 
 	group := r.Group("/data")
 
-	group.Use(middleware.TokenAuthMiddleware())
+	//group.Use(middleware.TokenAuthMiddleware())
 
 	group.POST("/getDataByRelativeTime", func(c *gin.Context) {
 
