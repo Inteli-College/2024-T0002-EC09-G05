@@ -4,7 +4,7 @@
     import MainChart from '../MainChart.vue';
     import GrapchA from '../GrapchA.vue';
     import GrapchB from '../GrapchB.vue';
-    import GrapchC from '../GrapchC.vue';
+    import HeatMap from '../HeatMap.vue';
 
 </script>
 
@@ -15,31 +15,30 @@
 
         <div class="xl:col-start-2 xl:col-end-9 flex-col min-h-screen col-start-1 h-fit  col-end-9 w-full">
             
+            
             <div class="flex flex-wrap gap-10 h-full max-w-full m-10 items-center align-items: flex-start" >
+                <div :class="`w-full flex justify-center  items-center min-h-52 h-auto  bg-white soft-shadow text-center`">
+                   <HeatMap />
+                </div>
                 <div :class="`w-96 flex justify-center  items-center min-h-52 h-auto bg-white soft-shadow text-center`">
                     <div class="flex flex-col w-auto">
                         <h1 class="m-3">MainChart</h1>
                         <MainChart />
                     </div>
                 </div>
-                <div :class="`w-96 flex justify-center  items-center min-h-52 h-auto  bg-white soft-shadow text-center`">
+                <div :class="`w-3/12 flex justify-center  items-center min-h-52 h-auto  bg-white soft-shadow text-center`">
                     <div class="flex flex-col w-auto">
                         <h1 class="m-3">GrapchA</h1>        
                         <GrapchA />
                     </div>
                 </div>
-                <div :class="`w-96 flex justify-center  items-center min-h-52 h-auto  bg-white soft-shadow text-center`">
+                <div :class="`w-3/12 flex justify-center  items-center min-h-52 h-auto  bg-white soft-shadow text-center`">
                     <div class="flex flex-col w-auto">
                         <h1 class="m-3">GrapchB</h1>
                         <GrapchB  />
                     </div>
                 </div>
-                <div :class="`w-96 flex justify-center  items-center min-h-52 h-auto  bg-white soft-shadow text-center`">
-                    <div class="flex flex-col w-auto">
-                        <h1 class="m-3">GrapchC</h1>
-                        <GrapchC />
-                    </div>
-                </div>
+
             </div> 
         </div>
     </div>

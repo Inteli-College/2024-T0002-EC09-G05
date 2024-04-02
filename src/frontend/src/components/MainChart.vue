@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="w-full h-auto">
     <canvas id="chart"></canvas>
   </div>
 </template>
@@ -106,7 +106,7 @@ onMounted(() => {
   });
   console.log("Chart Ref: ", chartRef)
   updateChart(chartRef);
-  fetchDataInterval = setInterval(fetchData, 1000);
+  fetchDataInterval = setInterval(fetchData, 10000);
 });
 
 onUnmounted(() => {

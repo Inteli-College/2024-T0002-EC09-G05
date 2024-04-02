@@ -15,8 +15,24 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
+  optimizeDeps: {
+    include: ['cypress'], 
+  },
+  
+  preview:{
+    host: true,
+    port: 3000
+  },
   server:{
-    port: 3000,
+    host: true,
+    port: 8084,
+    watch: {
+      usePolling: true
+    },
+    hmr: {
+      protocol: 'ws',
+      host: '0.0.0.0',
+    },
     
     proxy:{
       '/api': {
