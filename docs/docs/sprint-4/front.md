@@ -32,3 +32,9 @@ O Dashboard se adaptar conforme as configurações aplicadas de cada logado na p
 ## Dashboard Público
 O Dashboard público é visado para o público em geral, trazendo informações de forma mais genérica e que qualquer pessoas consiga acessar.
 ![Dashboad Publico](img/dash_login.png)
+
+## Mapa de Calor
+O Componente 'HeatMap' (Mapa de Calor) tem a função de indicar para o usuario, em um mapa interativo, a temperatura média da região. Através da API do Google Maps, plotamos no mapa um ponto de latidude e longitude, com um peso especifico. 
+
+Essas pontos de coordenadas virão do nosso backend com as informações dos sensores, e o peso de cada ponto será definido através da conversão do valor de temperatura do sensor, para uma escala de maximo e minimo de temperatura. Implementaremos na próxima sprint os indicadores visuais desses valores de temperatura para uma escala de cores, facilitando a compreensão por parte do usuário
+![Dashboad Publico](img/heatmap-zmout.png)
