@@ -22,9 +22,9 @@ func main() {
 	routes.SetupAuthRoutes(r, pg)
 
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:           []string{"http://localhost:5173"},
+		AllowOrigins:           []string{"http://localhost:5173", "http://localhost:3000"},
 		AllowBrowserExtensions: true,
-		AllowHeaders:           []string{"application/json"},
+		AllowHeaders:           []string{"Content-Type", "application/json","Access-Control-Allow-Headers", "Access-Control-Allow-Origin", },
 		AllowCredentials:       true,
 	}))
 
