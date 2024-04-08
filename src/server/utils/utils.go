@@ -26,6 +26,7 @@ func PrintASCIIArt() {
 	fmt.Println(` ┃       Dashboard do InfluxDB: http://localhost:8086          ┃`)
 	fmt.Println(` ┃       Dashboard do RabbitMQ: http://localhost:15672         ┃`)
 	fmt.Println(` ┃       Endpoint do servidor:  http://localhost:8080          ┃`)
+	fmt.Println(` ┃       Endpoint do frontend:  http://localhost:3000          ┃`)
 	fmt.Println(` ┃                                                             ┃`)
 	fmt.Println(` ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛`)
 	fmt.Println(``)

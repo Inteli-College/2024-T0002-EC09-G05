@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
+import AdmView from '../views/AdmView.vue'
 import PathNotFound from '../views/PathNotFound.vue'
 
 const router = createRouter({
@@ -15,6 +16,11 @@ const router = createRouter({
       path: '/auth', 
       name: 'auth',
       component: LoginView
+    },
+    {
+      path: '/adm', 
+      name: 'adm',
+      component: AdmView
     },
     { path: '/:pathMatch(.*)*', component: PathNotFound },
     
