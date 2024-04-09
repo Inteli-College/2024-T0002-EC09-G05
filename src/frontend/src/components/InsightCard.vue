@@ -3,7 +3,7 @@ import { CCard, CCardImage, CCardBody, CCardText, CCardTitle, CCol } from '@core
 </script>
 
 <template>
-<CCard class="mb-3" style="background-color: whitesmoke">
+<CCard class="mb-3">
     <CRow class="g-0">
         <CCol :md="4" class="max-w-12">
             <!-- <CCardImage class="rounded-0" src="../assets/logo.png" /> -->

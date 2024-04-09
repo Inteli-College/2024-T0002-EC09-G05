@@ -77,11 +77,14 @@
   
 }
 
+.bg-secudary{
+  background-color: rgb(244, 247, 255);
+}
+
 .SideBar{
   width: 275px;
   top: 75px;
   left: 10px;
-  background-color: aliceblue;
   transition: width 0.5s;
   transition: left 0.5s;
   z-index: 1;

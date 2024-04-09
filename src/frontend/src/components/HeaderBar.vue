@@ -58,14 +58,7 @@
               >
                 <MenuItem v-slot="{ active }">
                   <a
-                    href="#"
-                    :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
-                    >Your Profile</a
-                  >
-                </MenuItem>
-                <MenuItem v-slot="{ active }">
-                  <a
-                    href="#"
+                    href="/settings"
                     :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
                     >Settings</a
                   >
@@ -73,7 +66,7 @@
                 <MenuItem v-slot="{ active }">
                   <a
                   href="/auth"
-                  @click="handler"
+                  @click="singout_handler"
                     :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
                     >Sign out</a
                   >
@@ -93,7 +86,7 @@ import { BellIcon } from '@heroicons/vue/24/outline'
 import SearchBar from '../components/SearchBar.vue'
 import { useCookies } from 'vue3-cookies'
 
-function handler(event) {
+function singout_handler(event) {
   useCookies().cookies.remove("authToken")
   
 }

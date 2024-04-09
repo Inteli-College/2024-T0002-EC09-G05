@@ -10,7 +10,7 @@
 
 <template>
     <div class="grid grid-cols-6  w-screen h-auto min-h-96 ">
-        <div class=" bg-slate-100  sideMenu"></div>
+        <div class="bg-secudary  sideMenu"></div>
         <SideBar />
 
         <div class="xl:col-start-2 xl:col-end-9 flex-col min-h-screen col-start-1 h-fit  col-end-9 w-full">
