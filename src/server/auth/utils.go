@@ -42,7 +42,7 @@ func GenerateToken(user_id uint, role uint) (string, error) {
 
 }
 
-func LoginCheck(email string, password string, pg *gorm.DB) (string, string, int, error) {
+func LoginCheck(email string, password string, pg *gorm.DB) (string, string, int, int, error) {
 
 	var err error
 
@@ -52,13 +52,13 @@ func LoginCheck(email string, password string, pg *gorm.DB) (string, string, int
 
 	if err != nil {
 		fmt.Println("email not found in database")
-		return "", "Erro", 0, err
+		return "", "Erro", 0, -1, err
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
 	if err != nil {
 		fmt.Println("password does not match (ERROR in bcrypt)")
-		return "", "", 0, bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
+		return "", "", 0, -1, bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
 	} else {
 		fmt.Println("password matches")
 	}
@@ -68,9 +68,9 @@ func LoginCheck(email string, password string, pg *gorm.DB) (string, string, int
 	if err != nil {
 		fmt.Println("error generating token")
 		fmt.Println(err)
-		return "", "", 0, err
+		return "", "", 0, -1, err
 	}
 
-	return token, u.Name, int(u.ID), nil
+	return token, u.Name, int(u.ID), int(u.Role), nil
 
 }

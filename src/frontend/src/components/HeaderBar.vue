@@ -57,7 +57,12 @@
                 class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-gray-700 ring-opacity-5 focus:outline-none"
               >
                 <MenuItem v-slot="{ active }">
-                  <a
+                  <a v-if="role!=1"
+                    href="/settings"
+                    :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
+                    >Profile</a
+                  >
+                  <a v-else
                     href="/settings"
                     :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
                     >Settings</a
@@ -86,6 +91,8 @@ import { BellIcon } from '@heroicons/vue/24/outline'
 import SearchBar from '../components/SearchBar.vue'
 import { useCookies } from 'vue3-cookies'
 
+var role = useCookies().cookies.get("role")
+console.log(role)
 function singout_handler(event) {
   useCookies().cookies.remove("authToken")
   

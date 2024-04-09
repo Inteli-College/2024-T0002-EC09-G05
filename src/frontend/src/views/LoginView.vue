@@ -100,6 +100,7 @@ export default {
 
         
         useCookies().cookies.set('authToken', response.data.id)
+        useCookies().cookies.set('role', response.data.role)
         if (!response.data) {
           throw new Error('Erro ao fazer requisição para o servidor.');
         }
@@ -110,7 +111,7 @@ export default {
       } catch (error) {
         this.$toast.error(`Usuário ou senha estão incorretos.`);
         console.error('Ocorreu um erro:', error);
-        // Aqui você pode exibir uma mensagem de erro para o usuário, informando que houve um problema durante a autenticação
+        
       }
     }
   }

@@ -13,6 +13,7 @@ type RegisterInput struct {
 	Email    string `json:"email" validate:"required,email"`
 	Password string `json:"password" validate:"required"`
 	Name     string `json:"name" validate:"required"`
+	Role     int    `json:"role"`
 }
 
 type LoginInput struct {
@@ -36,14 +37,14 @@ func Login(c *gin.Context, pg *gorm.DB) {
 		return
 	}
 
-	token, name, id, err := LoginCheck(input.Email, input.Password, pg)
+	token, name, id, role, err := LoginCheck(input.Email, input.Password, pg)
 
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 	c.SetCookie("token", token, 3600, "/", "localhost", false, true)
-	c.JSON(200, gin.H{"token": token, "name": name, "id": id})
+	c.JSON(200, gin.H{"token": token, "name": name, "id": id, "role": role})
 
 }
 
@@ -76,6 +77,7 @@ func Register(c *gin.Context, pg *gorm.DB) {
 		Email:    input.Email,
 		Password: hashedPassword,
 		Name:     input.Name,
+		Role:     uint(input.Role),
 	}
 
 	user, _ := u.SaveUser(pg, &u)
