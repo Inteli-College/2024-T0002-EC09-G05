@@ -15,7 +15,8 @@ app.use(Toaster)
 app.use(createPinia())
 app.use(router)
 app.use(PrimeVue, {
-  unstyled: true
+  unstyled: true,
+  pt: "Tailwind"    
 })
 
 app.mount('#app')
