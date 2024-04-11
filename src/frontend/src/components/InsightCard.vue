@@ -1,24 +1,46 @@
 <script setup>
-import { CCard, CCardImage, CCardBody, CCardText, CCardTitle, CCol } from '@coreui/vue'
+import { CCard, CCardText, CCardTitle, CCol, CRow } from '@coreui/vue'
 </script>
 
 <template>
-<CCard class="mb-3">
-    <CRow class="g-0">
-        <CCol :md="4" class="max-w-12">
-            <!-- <CCardImage class="rounded-0" src="../assets/logo.png" /> -->
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 1 0-2.636 6.364M16.5 12V8.25" />
-            </svg>
-
+<CCard class="mb-1">
+    <CRow class="g-0 flex"> 
+        <CCol class="flex items-center"> 
+            <img src="../assets/icon3.svg" class="custom-image">
         </CCol>
-        <CCol :md="8">
-        <CCardBody>
-            <CCardTitle>Butantã teve sua maior temperatura dos últimos anos</CCardTitle>
-            <!-- <CCardText>.</CCardText> -->
-            <CCardText><small class="text-body-secondary" style="color: #718EBF;">25 de Março de 2024</small></CCardText>
-        </CCardBody>
+        <CCol class="ml-4">
+            <CCardTitle >Butantã teve sua maior temperatura dos últimos anos</CCardTitle>    
+            <CCardText><small class="text-body-secondary" style="color: #718EBF;">5 de Abril de 2024</small></CCardText>
+        </CCol>
+    </CRow>
+</CCard>
+<CCard class="mb-1">
+    <CRow class="g-0 flex"> 
+        <CCol class="flex"> 
+            <img src="../assets/icon2.svg" class="custom-image">
+        </CCol>
+        <CCol class="ml-4">
+            <CCardTitle >Centro de São Paulo teve sua menor temperatura dos últimos anos</CCardTitle>    
+            <CCardText><small class="text-body-secondary" style="color: #718EBF;">5 de Abril de 2024</small></CCardText>
+        </CCol>
+    </CRow>
+</CCard>
+<CCard class="mb-1">
+    <CRow class="g-0 flex"> 
+        <CCol class="flex"> 
+            <img src="../assets/icon1.svg" class="custom-image">
+        </CCol>
+        <CCol class="ml-4">
+            <CCardTitle >Aumento de gastos com controle atmosférico</CCardTitle>    
+            <CCardText><small class="text-body-secondary" style="color: #718EBF;">5 de Abril de 2024</small></CCardText>
         </CCol>
     </CRow>
 </CCard>
 </template>
+
+<style scoped>
+.custom-image {
+    width: 100px; 
+    height: 100px; 
+}
+</style>
