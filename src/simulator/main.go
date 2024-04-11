@@ -42,7 +42,7 @@ var PM2_5 = NewSensor("PM2_5", 0, 30)
 var PM4_0 = NewSensor("PM4_0", -40, 70)
 var PM10_0 = NewSensor("PM10_0", 3, 30)
 var Temp = NewSensor("Temp", -40, 70)
-var Hum = NewSensor("Hum", 20, 50)
+var Hum = NewSensor("Hum", 0, 100)
 
 func configureSSL() *tls.Config {
 	certpool := x509.NewCertPool()

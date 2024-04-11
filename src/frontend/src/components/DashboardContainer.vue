@@ -4,7 +4,7 @@
     import MainChart from './MainChart.vue';
     import GrapchA from './GrapchA.vue';
     import GrapchB from './GrapchB.vue';
-    
+    import GraphRain from './GraphRain.vue';
     import HeatMap from './HeatMap.vue';
     
     import axios from 'axios';
@@ -65,7 +65,7 @@
                             <GrapchA v-if="element_.Name == 'GrapchA'" />
                             <GrapchB v-if="element_.Name == 'GrapchB'" />
                             <HeatMap v-if="element_.Name == 'HeatMap'" />
-
+                            <GraphRain v-if="element_.Name == 'GraphRain'" />
                     </div>
                 </template>
             </draggable> 

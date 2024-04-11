@@ -141,3 +141,46 @@ func ChangeRole(c *gin.Context, pg *gorm.DB) {
 	c.JSON(200, gin.H{"status": "ok"})
 
 }
+
+func ChangeDirectorate(c *gin.Context, pg *gorm.DB) {
+
+	var validate = validator.New()
+	var input struct {
+		Email         string `json:"email" validate:"required,email"`
+		DirectorateID int    `json:"directorate_id" validate:"required"`
+	}
+
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	validationErr := validate.Struct(input)
+
+	if validationErr != nil {
+		c.JSON(400, gin.H{"error": validationErr.Error()})
+		return
+	}
+
+	tx := pg.First(&db.User{}, "email = ?", input.Email)
+
+	if tx.RowsAffected == 0 {
+		c.JSON(400, gin.H{"error": "Email not found"})
+		return
+
+	}
+
+	newDirectorate := db.Directorate{}
+
+	tx = pg.First(&db.Directorate{}, "id = ?", input.DirectorateID).Take(&newDirectorate)
+
+	if tx.RowsAffected == 0 {
+		c.JSON(400, gin.H{"error": "Directorate id not found"})
+		return
+	}
+
+	pg.Model(&db.User{}).Where("email = ?", input.Email).Update("directorate", newDirectorate)
+
+	c.JSON(200, gin.H{"status": "ok"})
+
+}

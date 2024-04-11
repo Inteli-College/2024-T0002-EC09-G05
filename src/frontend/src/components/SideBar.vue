@@ -8,11 +8,14 @@ import Btn from './Btn.vue'
         <div class="SideBar min-h-full bg-secudary xl:block max-w-sm fixed">      
             <div class="flex flex-col gap-10 items-center m-6 h-auto"> 
                 <div class="flex w-full items-center justify-between">
-                    <SideBarTitleSection title="Insights Recentes"/>
+                    <SideBarTitleSection title="Insights Recentes" class="font-bold text-xl"/>
                     <Btn />
                 </div>
                 <InsightCard/>
-                <SideBarTitleSection title="Estatisticas Rápidas"/>
+                <div>
+                    <SideBarTitleSection title="Estatisticas Rápidas" class="font-bold text-xl"/>
+
+                </div>
                 <SideBarStats/>
             </div>
         </div>

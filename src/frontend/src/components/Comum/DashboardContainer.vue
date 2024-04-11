@@ -5,6 +5,7 @@
     import GrapchA from '../GrapchA.vue';
     import GrapchB from '../GrapchB.vue';
     import HeatMap from '../HeatMap.vue';
+    import GraphRain from '../GraphRain.vue'
 
 </script>
 
@@ -32,10 +33,10 @@
                         <GrapchA />
                     </div>
                 </div>
-                <div :class="`w-3/12 flex justify-center  items-center min-h-52 h-auto  bg-white soft-shadow text-center`">
+                <div :class="`w-96 flex justify-center  items-center min-h-52 h-auto bg-white soft-shadow text-center`">
                     <div class="flex flex-col w-auto">
-                        <h1 class="m-3">GrapchB</h1>
-                        <GrapchB  />
+                        <h1 class="m-3">GraphRain</h1>
+                        <GraphRain  />
                     </div>
                 </div>
 
