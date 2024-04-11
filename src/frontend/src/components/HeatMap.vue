@@ -29,7 +29,7 @@ const googleApi = import.meta.env.VITE_GOOGLE_API
 
 <template >
   <GoogleMap
-    api-key=""
+    :api-key="googleApi"
     :libraries="['visualization']"
     style="width: 100%; height: 600px;"
     :center="inteli"

@@ -1,6 +1,9 @@
 <template>
-      <HeaderBar  />
-    <form class="bg-slate-50 mt-48">
+    <HeaderBar  />
+    <InputText label="Nome"/>
+    <ToggleOptions textLabel="Selecione um usuario"/>
+    
+    <!-- <form class="bg-slate-50 mt-48">
       <div class="space-y-12 soft-shadow">
         <div class="border-b border-gray-900/10 pb-12">
           <h2 class="text-base font-semibold leading-7 text-gray-900">Profile</h2>
@@ -16,6 +19,7 @@
                 </div>
               </div>
             </div>
+            
   
             <div class="col-span-full">
               <label for="about" class="block text-sm font-medium leading-6 text-gray-900">About</label>
@@ -182,10 +186,13 @@
         <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
         <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
       </div>
-    </form>
+    </form> -->
   </template>
   
   <script setup>
   import { PhotoIcon, UserCircleIcon } from '@heroicons/vue/24/solid'
   import HeaderBar from '../components/HeaderBar.vue';
+  import InputText from '../components/adminForms/InputText.vue';
+  import ToggleOptions from '../components/adminForms/ToggleOptions.vue'
+
   </script>
