@@ -147,7 +147,7 @@ func ChangeDirectorate(c *gin.Context, pg *gorm.DB) {
 	var validate = validator.New()
 	var input struct {
 		Email         string `json:"email" validate:"required,email"`
-		DirectorateID string `json:"directorate_id" validate:"required, eq=1|eq=2"`
+		DirectorateID int    `json:"directorate_id" validate:"required"`
 	}
 
 	if err := c.ShouldBindJSON(&input); err != nil {
@@ -171,7 +171,7 @@ func ChangeDirectorate(c *gin.Context, pg *gorm.DB) {
 	}
 
 	newDirectorate := db.Directorate{}
-	
+
 	tx = pg.First(&db.Directorate{}, "id = ?", input.DirectorateID).Take(&newDirectorate)
 
 	if tx.RowsAffected == 0 {
