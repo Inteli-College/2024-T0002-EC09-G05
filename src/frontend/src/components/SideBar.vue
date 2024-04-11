@@ -2,7 +2,7 @@
 import InsightCard from './InsightCard.vue'
 import SideBarTitleSection from './SideBarTitleSection.vue'
 import SideBarStats from './SideBarStats.vue'
-import Btn from './btn.vue'
+import Btn from './Btn.vue'
 </script>
 <template>
         <div class="SideBar min-h-full bg-secudary xl:block max-w-sm fixed">      

@@ -1,6 +1,6 @@
 <template>
     <div class="w-full h-auto">
-      <canvas id="chart"></canvas>
+      <canvas id="hum"></canvas>
     </div>
   </template>
   
@@ -32,12 +32,7 @@
     let values;
   
     try {
-      const response = await axios.post(url, requestBody, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE3MTI0NDc5NTUsInJvbGUiOjEsInVzZXJfaWQiOjF9.Uhlb9g6aMonA78FUZyw06Y4VftpKglY-VxiXb_ycxTw', 
-        },
-      });
+      const response = await axios.post(url, requestBody);
   
       if (response.data && response.data.length > 0) {
         const sensorData = response.data[0].data;
@@ -81,7 +76,7 @@
   }
   
   onMounted(() => {
-    const ctx = document.getElementById('chart');
+    const ctx = document.getElementById('hum');
     let chartRef = new Chart(ctx, {
       type: 'line',
       data: {
