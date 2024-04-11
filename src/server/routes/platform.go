@@ -13,6 +13,8 @@ func SetupPlatformRoutes(r *gin.Engine, pg *gorm.DB) {
 
 	group.POST("/getComponents", func(c *gin.Context) { platform.GetAll(c, pg) })
 
+	group.GET("/get_all_components", func(c *gin.Context) { platform.GetAllComponents(c, pg) }) //get_all_components
+
 	//group.POST("/updateLayout", func(c *gin.Context) { platform.ChangeRole(c, pg) })
 
 }

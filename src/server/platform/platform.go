@@ -44,3 +44,42 @@ func GetAll(c *gin.Context, pg *gorm.DB) {
 	c.JSON(200, gin.H{"status": "ok", "elements": result})
 
 }
+
+func GetAllComponents(c *gin.Context, pg *gorm.DB) {
+
+	type Id struct {
+		Id uint
+	}
+
+	type Props struct {
+		Value string
+	}
+
+	type Elements struct {
+		Name string
+	}
+
+	type Directorates struct {
+		Directorate string
+	}
+
+	var id []Id
+	var props []Props
+	var elements []Elements
+	var directorates []Directorates
+
+	// Raw SQL
+	pg.Raw("SELECT elements.name FROM elements").Scan(&elements)
+	pg.Raw("SELECT directorates.directorate FROM directorates").Scan(&directorates)
+	pg.Raw("SELECT props.value FROM props").Scan(&props)
+	pg.Raw("SELECT users.id FROM users").Scan(&id)
+
+	c.JSON(200, gin.H{
+		"status":       "ok",
+		"users_id":     id,
+		"props":        props,
+		"elements":     elements,
+		"directorates": directorates,
+	})
+
+}
