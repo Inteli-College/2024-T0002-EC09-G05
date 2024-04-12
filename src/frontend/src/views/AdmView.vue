@@ -6,8 +6,9 @@
                     <span class="close" @click="closeModal">&times;</span>
                     <p class="font-extrabold">Usuário</p>
                     <form class="mt-8 flex items-center justify-center" action="" @submit.prevent="userUpdate">
-                        <div class="flex  w-4/5 justify-between flex-wrap">
-                            <div>
+                        <div class="flex  w-2/4 flex-col items-center justify-center">
+                            <div class="flex  w-4/5 justify-between flex-wrap">
+                                <div>
                             <label for="name" class="block text-sm font-medium leading-6 text-gray-900"
                             >Name</label
                             >
@@ -27,6 +28,7 @@
                             >
                             <div class="mt-2">
                             <input
+                            
                                 id="email"
                                 email="email"
                                 type="text"
@@ -35,7 +37,9 @@
                             />
                             </div>
                         </div>
-                        <div class="mt-4">
+                            </div>
+                        <div class="flex  w-4/5 justify-between flex-wrap">
+                            <div class="mt-4">
                             <label for="role" class="block text-sm font-medium leading-6 text-gray-900"
                             >Role</label
                             >
@@ -67,6 +71,8 @@
                 </button>
                         </div>
                         </div>
+
+                        </div>
                     </form>
                 </div>
             </div>
@@ -96,7 +102,7 @@
                         <th>Diretoria</th>
                         <th>Email</th>
                     </thead>
-                    <tr v-for="item in raw_data.users_raw" @click="modalConfig(item.ID)">
+                    <tr v-for="item in raw_data.users_raw" @click="modalConfig(item.Email)">
                         <td>{{item.ID}}</td>
                         <td>{{item.Name}}</td>
                         <td>{{item.Role}}</td>
@@ -117,8 +123,6 @@ import HeaderBar from '../components/HeaderBar.vue';
 import { ref ,onMounted } from 'vue';
 import axios from 'axios';
 
-
-var role_raw = []
 
 const raw_data = ref({'users_raw':["oi"]});
 const get_raw_data = async () =>{
@@ -147,15 +151,37 @@ async function format_data() {
 
 
 
-var id = 0
-const userUpdate = () =>{
-    alert(id)
+var email = 0
+const userUpdate = async () =>{
+      try {
+        const url = '/api/auth/changeUser';
+        const response = await axios.post( url,      {
+		"email"       : "maria@gmail.com",
+		"role"        : 2,
+		"directorate" : 2,
+		"name"       :  "Maria Carla"
+});
+
+        if (!response.data) {
+          throw new Error('Erro ao fazer requisição para o servidor.');
+        }
+
+      } catch (error) {
+        this.$toast.error(`Usuário ou senha estão incorretos.`);
+        console.error('Ocorreu um erro:', error);
+        
+      
+    }
+    location.reload();
+
+
 }
 
 const isModalOpen = ref(false);
 
-const modalConfig = (ID) =>{
-    id = ID
+
+const modalConfig = (email) =>{
+    email = email
     isModalOpen.value = true
 }
 

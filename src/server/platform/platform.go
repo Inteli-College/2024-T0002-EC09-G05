@@ -47,6 +47,14 @@ func GetAll(c *gin.Context, pg *gorm.DB) {
 
 func GetAllComponents(c *gin.Context, pg *gorm.DB) {
 
+	type Users_raw struct {
+		ID          uint
+		Name        string
+		Email       string
+		Role        uint
+		Directorate string
+	}
+
 	type Id struct {
 		Id uint
 	}
@@ -67,8 +75,10 @@ func GetAllComponents(c *gin.Context, pg *gorm.DB) {
 	var props []Props
 	var elements []Elements
 	var directorates []Directorates
+	var users_raw []Users_raw
 
 	// Raw SQL
+	pg.Raw("SELECT users.id, users.name, users.email, users.role, directorates.directorate    FROM users JOIN directorates ON users.directorate_refer = directorates.id ORDER BY users.id ASC").Scan(&users_raw)
 	pg.Raw("SELECT elements.name FROM elements").Scan(&elements)
 	pg.Raw("SELECT directorates.directorate FROM directorates").Scan(&directorates)
 	pg.Raw("SELECT props.value FROM props").Scan(&props)
@@ -80,6 +90,7 @@ func GetAllComponents(c *gin.Context, pg *gorm.DB) {
 		"props":        props,
 		"elements":     elements,
 		"directorates": directorates,
+		"users_raw":    users_raw,
 	})
 
 }

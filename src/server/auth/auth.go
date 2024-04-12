@@ -103,6 +103,43 @@ func Register(c *gin.Context, pg *gorm.DB) {
 
 }
 
+func ChangeUser(c *gin.Context, pg *gorm.DB) {
+
+	var validate = validator.New()
+	var input struct {
+		Email       string `json:"email" validate:"required,email"`
+		Role        int    `json:"role" validate:"required"`
+		Directorate int    `json:"directorate" validate:"required"`
+		Name        string `json:"name" validate:"required"`
+	}
+
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	validationErr := validate.Struct(input)
+	if validationErr != nil {
+		c.JSON(400, gin.H{"error": validationErr.Error()})
+		return
+	}
+
+	tx := pg.First(&db.User{}, "email = ?", input.Email)
+
+	if tx.RowsAffected == 0 {
+		c.JSON(400, gin.H{"error": "Email not found"})
+		return
+	}
+
+	pg.Model(&db.User{}).Where("email = ?", input.Email).Update("role", uint(input.Role))
+	pg.Model(&db.User{}).Where("email = ?", input.Email).Update("directorate", input.Directorate)
+	pg.Model(&db.User{}).Where("email = ?", input.Email).Update("email", input.Email)
+	pg.Model(&db.User{}).Where("email = ?", input.Email).Update("name", input.Name)
+
+	c.JSON(200, gin.H{"status": "ok"})
+
+}
+
 func ChangeRole(c *gin.Context, pg *gorm.DB) {
 
 	requesterRole := c.GetInt("role")
