@@ -132,7 +132,7 @@ func ChangeUser(c *gin.Context, pg *gorm.DB) {
 	}
 
 	pg.Model(&db.User{}).Where("email = ?", input.Email).Update("role", uint(input.Role))
-	pg.Model(&db.User{}).Where("email = ?", input.Email).Update("directorate", input.Directorate)
+	pg.Model(&db.User{}).Where("email = ?", input.Email).Update("directorate_refer", input.Directorate)
 	pg.Model(&db.User{}).Where("email = ?", input.Email).Update("email", input.Email)
 	pg.Model(&db.User{}).Where("email = ?", input.Email).Update("name", input.Name)
 

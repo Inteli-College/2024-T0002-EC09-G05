@@ -9,15 +9,16 @@
                         <div class="flex  w-2/4 flex-col items-center justify-center">
                             <div class="flex  w-4/5 justify-between flex-wrap">
                                 <div>
-                            <label for="name" class="block text-sm font-medium leading-6 text-gray-900"
+                            <label for="Name" class="block text-sm font-medium leading-6 text-gray-900"
                             >Name</label
                             >
                             <div class="mt-2">
                             <input
-                                id="name"
-                                name="name"
+                                placeholder="name"
+                                id="Name"
+                                Name="name"
                                 type="text"
-                                v-model="name"
+                                v-model="Name"
                                 class="block w-40 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                             </div>
@@ -27,14 +28,7 @@
                             >Email</label
                             >
                             <div class="mt-2">
-                            <input
-                            
-                                id="email"
-                                email="email"
-                                type="text"
-                                v-model="email"
-                                class="block w-40 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            />
+                                <span>{{ email_placeholder }}</span>
                             </div>
                         </div>
                             </div>
@@ -44,10 +38,10 @@
                             >Role</label
                             >
                             <div class="mt-2">
-                                <select class="block w-40 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" name="pets" id="pet-select">
+                                <select class="block w-40 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" name="role" id="role">
                                 <option value="">--Please choose an option--</option>
                                 <option value="0">0</option>
-                                <option value="1">1</option>
+                                <option value="1">1</option> 
                                 <option value="2">2</option>
                                 </select>
                             </div>
@@ -57,9 +51,9 @@
                             >Diretoria</label
                             >
                             <div class="mt-2">
-                                <select class="block w-40 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" name="pets" id="pet-select">
+                                <select class="block w-40 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" name="directorate" id="directorate">
                                 <option  value="">--Please choose an option--</option>
-                                <option  v-for="item in raw_data.directorates" value="dog">{{item.Directorate}}</option>
+                                <option  v-for="item in raw_data.directorates" :value="item.Id">{{item.Directorate}}</option>
                                 </select>
                             </div>
                         </div>
@@ -124,6 +118,7 @@ import { ref ,onMounted } from 'vue';
 import axios from 'axios';
 
 
+var email_placeholder = ref("email");
 const raw_data = ref({'users_raw':["oi"]});
 const get_raw_data = async () =>{
     try {
@@ -146,33 +141,32 @@ const get_raw_data = async () =>{
 async function format_data() {
    var raw = await get_raw_data()
    raw_data.value = raw
-   console.log("aaaaa ",raw_data.value.users_raw)
+   //console.log(raw_data.value.users_raw)
 }
 
-
-
-var email = 0
 const userUpdate = async () =>{
+
       try {
         const url = '/api/auth/changeUser';
         const response = await axios.post( url,      {
-		"email"       : "maria@gmail.com",
-		"role"        : 2,
-		"directorate" : 2,
-		"name"       :  "Maria Carla"
+		"email"       : email_placeholder,
+		"role"        : Number(role.value),
+		"directorate" : Number(directorate.value),
+		"name"       :  Name.value
 });
 
         if (!response.data) {
           throw new Error('Erro ao fazer requisição para o servidor.');
         }
+        location.reload();
 
       } catch (error) {
-        this.$toast.error(`Usuário ou senha estão incorretos.`);
+       
         console.error('Ocorreu um erro:', error);
         
       
     }
-    location.reload();
+    
 
 
 }
@@ -180,8 +174,8 @@ const userUpdate = async () =>{
 const isModalOpen = ref(false);
 
 
-const modalConfig = (email) =>{
-    email = email
+const modalConfig = (Email) =>{
+    email_placeholder = Email
     isModalOpen.value = true
 }
 

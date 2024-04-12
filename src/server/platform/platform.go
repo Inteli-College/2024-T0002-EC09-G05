@@ -69,6 +69,7 @@ func GetAllComponents(c *gin.Context, pg *gorm.DB) {
 
 	type Directorates struct {
 		Directorate string
+		Id          uint
 	}
 
 	var id []Id
@@ -80,7 +81,7 @@ func GetAllComponents(c *gin.Context, pg *gorm.DB) {
 	// Raw SQL
 	pg.Raw("SELECT users.id, users.name, users.email, users.role, directorates.directorate    FROM users JOIN directorates ON users.directorate_refer = directorates.id ORDER BY users.id ASC").Scan(&users_raw)
 	pg.Raw("SELECT elements.name FROM elements").Scan(&elements)
-	pg.Raw("SELECT directorates.directorate FROM directorates").Scan(&directorates)
+	pg.Raw("SELECT directorates.directorate, directorates.id FROM directorates").Scan(&directorates)
 	pg.Raw("SELECT props.value FROM props").Scan(&props)
 	pg.Raw("SELECT users.id FROM users").Scan(&id)
 
